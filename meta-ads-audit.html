@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>RV Weather | Meta Ads Strategic Audit, Q2 2026</title>
+ <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+ <style>
+ :root {
+ --bg-primary: #0f0f1a;
+ --bg-secondary: #1a1a2e;
+ --bg-card: #16162a;
+ --bg-card-hover: #1e1e3a;
+ --border: rgba(255,255,255,0.06);
+ --accent-green: #00d9a5;
+ --accent-green-dim: rgba(0, 217, 165, 0.15);
+ --accent-purple: #8b5cf6;
+ --accent-purple-dim: rgba(139, 92, 246, 0.15);
+ --accent-blue: #3b82f6;
+ --accent-pink: #ec4899;
+ --accent-red: #ef4444;
+ --accent-orange: #f59e0b;
+ --accent-brand: #2563eb;
+ --accent-brand-light: #93c5fd;
+ --text-primary: #ffffff;
+ --text-secondary: #a0a0b8;
+ --text-muted: #6b6b80;
+ }
+
+ * { margin: 0; padding: 0; box-sizing: border-box; }
+
+ body {
+ font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+ background: var(--bg-primary);
+ color: var(--text-primary);
+ line-height: 1.6;
+ font-size: 15px;
+ }
+
+.slide {
+ min-height: 100vh;
+ padding: 48px 64px;
+ position: relative;
+ display: flex;
+ flex-direction: column;
+ border-bottom: 1px solid var(--border);
+ }
+
+.slide-number {
+ position: absolute;
+ top: 24px;
+ right: 32px;
+ font-size: 13px;
+ color: var(--text-muted);
+ font-weight: 600;
+ letter-spacing: 1px;
+ }
+
+.slide-tag {
+ font-size: 11px;
+ text-transform: uppercase;
+ letter-spacing: 2px;
+ color: var(--accent-brand-light);
+ margin-bottom: 8px;
+ font-weight: 600;
+ }
+
+ h1 {
+ font-family: 'DM Sans', sans-serif;
+ font-size: 52px;
+ font-weight: 700;
+ line-height: 1.15;
+ margin-bottom: 16px;
+ color: var(--text-primary);
+ }
+
+ h2 {
+ font-family: 'DM Sans', sans-serif;
+ font-size: 36px;
+ font-weight: 700;
+ margin-bottom: 28px;
+ color: var(--text-primary);
+ }
+
+ h3 {
+ font-size: 18px;
+ font-weight: 600;
+ margin-bottom: 16px;
+ color: var(--text-primary);
+ }
+
+ h4 {
+ font-size: 14px;
+ font-weight: 600;
+ margin-bottom: 8px;
+ color: var(--text-primary);
+ }
+
+ p {
+ font-size: 15px;
+ color: var(--text-secondary);
+ max-width: 720px;
+ }
+
+.subtitle {
+ font-size: 18px;
+ color: var(--text-secondary);
+ max-width: 600px;
+ margin-bottom: 32px;
+ font-weight: 400;
+ }
+
+ /* Cover */
+.cover {
+ justify-content: center;
+ align-items: center;
+ text-align: center;
+ background: radial-gradient(ellipse at 50% 30%, rgba(37, 99, 235, 0.10) 0%, transparent 50%),
+ radial-gradient(ellipse at 80% 80%, rgba(0, 217, 165, 0.05) 0%, transparent 40%);
+ }
+
+.cover h1 { font-size: 56px; }
+
+.cover.meta {
+ margin-top: 48px;
+ display: flex;
+ gap: 24px;
+ font-size: 13px;
+ color: var(--text-secondary);
+ flex-wrap: wrap;
+ justify-content: center;
+ }
+
+.cover.meta span {
+ display: flex;
+ align-items: center;
+ gap: 8px;
+ padding: 8px 16px;
+ background: var(--bg-card);
+ border-radius: 8px;
+ border: 1px solid var(--border);
+ }
+
+ /* Metrics grid */
+.metrics-grid {
+ display: grid;
+ grid-template-columns: repeat(5, 1fr);
+ gap: 16px;
+ margin: 32px 0;
+ }
+
+.metrics-grid.four-col { grid-template-columns: repeat(4, 1fr); }
+.metrics-grid.three-col { grid-template-columns: repeat(3, 1fr); }
+
+.metric-card {
+ background: var(--bg-card);
+ border: 1px solid var(--border);
+ border-radius: 12px;
+ padding: 20px 24px;
+ position: relative;
+ }
+
+.metric-card.green { border-top: 3px solid var(--accent-green); }
+.metric-card.purple { border-top: 3px solid var(--accent-purple); }
+.metric-card.red { border-top: 3px solid var(--accent-red); }
+.metric-card.orange { border-top: 3px solid var(--accent-orange); }
+.metric-card.brand { border-top: 3px solid var(--accent-brand); }
+
+.metric-label {
+ font-size: 12px;
+ text-transform: uppercase;
+ letter-spacing: 0.5px;
+ color: var(--text-muted);
+ margin-bottom: 8px;
+ font-weight: 500;
+ }
+
+.metric-value {
+ font-family: 'DM Sans', sans-serif;
+ font-size: 32px;
+ font-weight: 700;
+ color: var(--text-primary);
+ line-height: 1.1;
+ }
+
+.metric-value.large { font-size: 40px; }
+
+.metric-change {
+ font-size: 12px;
+ margin-top: 8px;
+ font-weight: 600;
+ display: flex;
+ align-items: center;
+ gap: 4px;
+ }
+
+.metric-change.up { color: var(--accent-green); }
+.metric-change.down { color: var(--accent-red); }
+.metric-change.neutral { color: var(--text-muted); }
+
+ /* Table */
+.data-table {
+ width: 100%;
+ border-collapse: collapse;
+ margin: 20px 0;
+ font-size: 13px;
+ }
+
+.data-table th {
+ text-align: left;
+ padding: 12px 16px;
+ background: var(--bg-card);
+ font-weight: 600;
+ font-size: 11px;
+ text-transform: uppercase;
+ letter-spacing: 0.5px;
+ color: var(--text-muted);
+ border-bottom: 1px solid var(--border);
+ }
+
+.data-table td {
+ padding: 12px 16px;
+ border-bottom: 1px solid var(--border);
+ color: var(--text-secondary);
+ }
+
+.data-table tr:hover td { background: var(--bg-card-hover); }
+.data-table.highlight { color: var(--text-primary); font-weight: 500; }
+.data-table.green { color: var(--accent-green); font-weight: 600; }
+.data-table.red { color: var(--accent-red); font-weight: 600; }
+.data-table.purple { color: var(--accent-purple); font-weight: 600; }
+.data-table.orange { color: var(--accent-orange); font-weight: 600; }
+
+ /* Layouts */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 32px; }
+.three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 32px; }
+.two-col.weighted { grid-template-columns: 2fr 1fr; }
+
+ /* Insight box */
+.insight-box {
+ background: var(--bg-card);
+ border-left: 3px solid var(--accent-green);
+ padding: 20px 24px;
+ margin: 24px 0;
+ border-radius: 0 12px 12px 0;
+ }
+
+.insight-box.purple { border-left-color: var(--accent-purple); }
+.insight-box.brand { border-left-color: var(--accent-brand); }
+.insight-box.red { border-left-color: var(--accent-red); }
+.insight-box.orange { border-left-color: var(--accent-orange); }
+
+.insight-box h4 {
+ color: var(--accent-green);
+ margin-bottom: 8px;
+ font-size: 13px;
+ text-transform: uppercase;
+ letter-spacing: 0.5px;
+ }
+
+.insight-box.purple h4 { color: var(--accent-purple); }
+.insight-box.brand h4 { color: var(--accent-brand-light); }
+.insight-box.red h4 { color: var(--accent-red); }
+.insight-box.orange h4 { color: var(--accent-orange); }
+
+.insight-box p {
+ color: var(--text-secondary);
+ font-size: 14px;
+ line-height: 1.7;
+ max-width: none;
+ }
+
+ /* Progress */
+.progress-container { margin: 12px 0; }
+.progress-label {
+ display: flex;
+ justify-content: space-between;
+ margin-bottom: 6px;
+ font-size: 13px;
+ color: var(--text-secondary);
+ }
+.progress-label.value { color: var(--text-primary); font-weight: 600; }
+.progress-bar {
+ height: 6px;
+ background: rgba(255,255,255,0.06);
+ border-radius: 3px;
+ overflow: hidden;
+ }
+.progress-fill {
+ height: 100%;
+ border-radius: 3px;
+ background: linear-gradient(90deg, var(--accent-purple) 0%, var(--accent-green) 100%);
+ }
+.progress-fill.green { background: var(--accent-green); }
+.progress-fill.purple { background: var(--accent-purple); }
+.progress-fill.red { background: var(--accent-red); }
+.progress-fill.orange { background: var(--accent-orange); }
+.progress-fill.brand { background: var(--accent-brand); }
+
+ /* Cards */
+.card {
+ background: var(--bg-card);
+ border: 1px solid var(--border);
+ border-radius: 12px;
+ padding: 24px;
+ }
+.card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+
+.concept-card {
+ background: var(--bg-card);
+ border: 1px solid var(--border);
+ border-radius: 16px;
+ padding: 28px;
+ position: relative;
+ overflow: hidden;
+ }
+
+.concept-card::after {
+ content: '';
+ position: absolute;
+ top: -30%;
+ right: -30%;
+ width: 60%;
+ height: 60%;
+ background: radial-gradient(circle, var(--accent-purple-dim) 0%, transparent 70%);
+ pointer-events: none;
+ }
+
+.concept-number {
+ font-family: 'DM Sans', sans-serif;
+ font-size: 48px;
+ font-weight: 700;
+ color: rgba(139, 92, 246, 0.15);
+ position: absolute;
+ top: 16px;
+ right: 20px;
+ }
+
+.concept-title {
+ font-family: 'DM Sans', sans-serif;
+ font-size: 20px;
+ font-weight: 700;
+ margin-bottom: 12px;
+ position: relative;
+ z-index: 1;
+ color: var(--text-primary);
+ }
+
+.tag {
+ display: inline-block;
+ padding: 4px 10px;
+ background: var(--accent-purple-dim);
+ border-radius: 6px;
+ font-size: 10px;
+ font-weight: 600;
+ color: var(--accent-purple);
+ margin-right: 6px;
+ margin-bottom: 6px;
+ text-transform: uppercase;
+ letter-spacing: 0.5px;
+ }
+.tag.green { background: var(--accent-green-dim); color: var(--accent-green); }
+.tag.red { background: rgba(239, 68, 68, 0.15); color: var(--accent-red); }
+.tag.orange { background: rgba(245, 158, 11, 0.15); color: var(--accent-orange); }
+.tag.brand { background: rgba(37, 99, 235, 0.2); color: var(--accent-brand-light); }
+
+ /* List */
+.check-list { list-style: none; margin: 16px 0; }
+.check-list li {
+ padding: 8px 0;
+ padding-left: 24px;
+ position: relative;
+ color: var(--text-secondary);
+ font-size: 14px;
+ }
+.check-list li::before {
+ content: '';
+ position: absolute;
+ left: 0;
+ top: 12px;
+ width: 8px;
+ height: 8px;
+ border-radius: 2px;
+ background: var(--accent-green);
+ }
+.check-list li.red::before { background: var(--accent-red); }
+.check-list li.orange::before { background: var(--accent-orange); }
+.check-list li.purple::before { background: var(--accent-purple); }
+
+ /* Comparison */
+.comparison {
+ display: grid;
+ grid-template-columns: 1fr 80px 1fr;
+ gap: 24px;
+ align-items: center;
+ margin: 32px 0;
+ }
+.comparison-box {
+ padding: 28px;
+ border-radius: 12px;
+ text-align: center;
+ background: var(--bg-card);
+ border: 1px solid var(--border);
+ }
+.comparison-box.old { border-color: rgba(239, 68, 68, 0.3); }
+.comparison-box.new { border-color: rgba(0, 217, 165, 0.3); }
+.comparison-vs {
+ font-family: 'DM Sans', sans-serif;
+ font-size: 18px;
+ font-weight: 700;
+ color: var(--text-muted);
+ text-align: center;
+ }
+
+ /* Trend bars */
+.trend-row {
+ display: grid;
+ grid-template-columns: 60px 1fr 80px 80px 80px;
+ gap: 16px;
+ align-items: center;
+ padding: 10px 0;
+ font-size: 13px;
+ border-bottom: 1px solid var(--border);
+ }
+.trend-row.win-label { font-weight: 600; color: var(--text-primary); }
+.trend-row.bar-wrap {
+ height: 8px;
+ background: rgba(255,255,255,0.06);
+ border-radius: 4px;
+ overflow: hidden;
+ }
+.trend-row.bar-fill {
+ height: 100%;
+ border-radius: 4px;
+ background: linear-gradient(90deg, var(--accent-brand) 0%, var(--accent-green) 100%);
+ }
+.trend-row.num { font-family: 'DM Sans', sans-serif; font-weight: 600; color: var(--text-primary); text-align: right; }
+.trend-row.num.muted { color: var(--text-secondary); font-weight: 400; }
+
+ /* Footer */
+.slide-footer {
+ margin-top: auto;
+ padding-top: 32px;
+ font-size: 11px;
+ color: var(--text-muted);
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ }
+
+ /* Data quality flag */
+.data-flag {
+ display: inline-block;
+ padding: 3px 8px;
+ background: rgba(245, 158, 11, 0.15);
+ border: 1px solid rgba(245, 158, 11, 0.3);
+ border-radius: 4px;
+ font-size: 10px;
+ color: var(--accent-orange);
+ font-weight: 600;
+ text-transform: uppercase;
+ letter-spacing: 0.5px;
+ margin-left: 8px;
+ }
+
+ @media print {
+.slide { page-break-after: always; }
+ }
+ </style>
+</head>
+<body>
+
+ <!-- SLIDE 1: Cover -->
+ <section class="slide cover">
+ <div class="slide-tag">Meta Ads Strategic Audit (account 2797396350332381)</div>
+ <h1>RV Weather</h1>
+ <p class="subtitle">90-Day Performance Audit, CRO &amp; Scaling Strategy</p>
+ <div class="meta">
+ <span>Audit window: 12 Feb to 13 May 2026</span>
+ <span>Optimisation event: SureRoute Annual</span>
+ <span>Prepared by: Charles Heath | Heath Media</span>
+ </div>
+ </section>
+
+ <!-- SLIDE 2: Executive Summary -->
+ <section class="slide">
+ <span class="slide-number">02 / 14</span>
+ <div class="slide-tag">Executive Summary</div>
+ <h2>The 90-Day Picture</h2>
+
+ <div class="metrics-grid">
+ <div class="metric-card brand">
+ <div class="metric-label">90d Spend</div>
+ <div class="metric-value large">$11,395</div>
+ <div class="metric-change neutral">$127/day avg</div>
+ </div>
+ <div class="metric-card purple">
+ <div class="metric-label">Annual Subs (90d)</div>
+ <div class="metric-value">85</div>
+ <div class="metric-change neutral">Meta-attributed</div>
+ </div>
+ <div class="metric-card red">
+ <div class="metric-label">Blended CPA (90d)</div>
+ <div class="metric-value">$134</div>
+ <div class="metric-change down">Break-even: ~$112</div>
+ </div>
+ <div class="metric-card red">
+ <div class="metric-label">Last 30d CPA</div>
+ <div class="metric-value">$179</div>
+ <div class="metric-change down">+73% vs prior 30d</div>
+ </div>
+ <div class="metric-card orange">
+ <div class="metric-label">Implied Y1 ROAS</div>
+ <div class="metric-value">0.74x</div>
+ <div class="metric-change down">At $100 AOV</div>
+ </div>
+ </div>
+
+ <div class="two-col">
+ <div class="insight-box red">
+ <h4>The Core Problem</h4>
+ <p>The account is <strong style="color: var(--text-primary);">trending in the wrong direction</strong>. Prior 30d, 14 Mar to 12 Apr delivered 55 subs at $104 CPA. Last 30d delivered 30 subs at $179 CPA. Purchase volume halved while CPA jumped 73%. The 7-day window confirms it: $1,059 spent, only 6 conversions, CPA $177.</p>
+ </div>
+ <div class="insight-box orange">
+ <h4>Three Things Going Wrong At Once</h4>
+ <p><strong style="color: var(--text-primary);">1. Creative fatigue</strong>. Frequency on Broad climbed to 2.99 (30d) on the same hero ads<br>
+ <strong style="color: var(--text-primary);">2. Lookalike is broken</strong>. $314 spent last 7 days for zero conversions<br>
+ <strong style="color: var(--text-primary);">3. Pixel data integrity</strong>. 100% of PageView events are flagged for invalid emails, hurting CAPI-driven targeting</p>
+ </div>
+ </div>
+
+ <div class="insight-box brand">
+ <h4>Where The Upside Is</h4>
+ <p>This is a salvageable account with decent fundamentals: clear winning creative (<strong style="color: var(--text-primary);">Avoids Dangerous Crosswinds</strong> at $111 CPR over 90d, 39 conversions on $4,348), a defensible product (Navy-meteorologist credibility, no real competitors), and a high-retention subscription model where 2y LTV likely exceeds $150. Fix the pixel, refresh creative, tidy up the ad-set structure and a sustainable <strong style="color: var(--accent-green);">CPA below $100</strong> at scaled spend is realistic inside 60 days.</p>
+ </div>
+
+ <div class="slide-footer">
+ <span>RV Weather | Meta Ads Strategic Audit</span>
+ <span>02 / 14</span>
+ </div>
+ </section>
+
+ <!-- SLIDE 3: Data Quality & Methodology -->
+ <section class="slide">
+ <span class="slide-number">03 / 14</span>
+ <div class="slide-tag">Methodology &amp; Caveats</div>
+ <h2>Data Sources &amp; What this audit covers and what it doesn't</h2>
+
+ <div class="two-col">
+ <div class="card">
+ <h4 style="color: var(--accent-brand-light);">What's in the dataset</h4>
+ <ul class="check-list">
+ <li>Meta Ads Manager CSV exports for 5 rolling windows: 90d, 60d, 30d, 14d, 7d</li>
+ <li>Campaign, ad set, and ad-level views (spend, impressions, reach, results, cost-per-result, quality ranking)</li>
+ <li>Funnel events from Events Manager (PageView, Lead, Purchase, SureRoute Annual)</li>
+ <li>Audience inventory from Audiences Manager</li>
+ <li>Live ad-set targeting screenshots (Broad &amp; Lookalike Stacked)</li>
+ <li>Holiday landing page screenshot (rvweather.com/landing-page-holiday-2025)</li>
+ </ul>
+ </div>
+ <div class="card" style="border-color: rgba(245,158,11,0.3);">
+ <h4 style="color: var(--accent-orange);">What's missing or limited</h4>
+ <ul class="check-list">
+ <li class="orange"><strong>No purchase_value column</strong> in the CSV exports, so ROAS is derived from the $99.99 annual sub price (verified on rvweather.com)</li>
+ <li class="orange"><strong>No CTR, CPC, hook rate or thru-play data</strong> in export, creative analysis is based on cost-per-result and quality ranking only</li>
+ <li class="orange"><strong>Pixel match quality issue</strong> (100% of PageView events with invalid emails) means Meta-attributed numbers likely under-count vs Shopify/Stripe truth</li>
+ <li class="orange"><strong>Subscription LTV</strong> modelled on industry-typical 50% Y2 renewal, 70% Y3-of-Y2, needs Stripe data to confirm</li>
+ <li class="orange"><strong>Monthly subs ($19.99/mo)</strong> not in scope of this optimisation event, they're additional upside</li>
+ </ul>
+ </div>
+ </div>
+
+ <div class="insight-box">
+ <h4>What this changes</h4>
+ <p>Every ROAS and unit-economics number in this deck is a model, not a measurement. <strong style="color: var(--text-primary);">First action when I take over is wiring up purchase_value tracking on the SureRoute Annual event</strong> and reconciling against Stripe weekly. Until that's done, treat CPA as the primary KPI (it's directly measured) and treat ROAS as directional.</p>
+ </div>
+
+ <div class="slide-footer">
+ <span>RV Weather | Meta Ads Strategic Audit</span>
+ <span>03 / 14</span>
+ </div>
+ </section>
+
+ <!-- SLIDE 4: Trend Analysis -->
+ <section class="slide">
+ <span class="slide-number">04 / 14</span>
+ <div class="slide-tag">Trend Analysis</div>
+ <h2>Performance Across 5 Windows</h2>
+
+ <table class="data-table">
+ <thead>
+ <tr>
+ <th>Window</th>
+ <th>Spend</th>
+ <th>Daily Avg</th>
+ <th>Subs</th>
+ <th>CPA</th>
+ <th>Impressions</th>
+ <th>Reach</th>
+ <th>Frequency</th>
+ <th>CPM</th>
+ </tr>
+ </thead>
+ <tbody>
+ <tr>
+ <td class="highlight">90 days</td>
+ <td>$11,395</td>
+ <td>$127</td>
+ <td class="highlight">85</td>
+ <td class="orange">$134.06</td>
+ <td>485,133</td>
+ <td>123,929</td>
+ <td class="orange">3.91</td>
+ <td>$23.49</td>
+ </tr>
+ <tr>
+ <td class="highlight">60 days</td>
+ <td>$11,075</td>
+ <td>$185</td>
+ <td class="highlight">85</td>
+ <td class="orange">$130.29</td>
+ <td>459,402</td>
+ <td>119,443</td>
+ <td class="orange">3.85</td>
+ <td>$24.11</td>
+ </tr>
+ <tr>
+ <td class="highlight">30 days</td>
+ <td>$5,381</td>
+ <td>$179</td>
+ <td class="red">30</td>
+ <td class="red">$179.37</td>
+ <td>226,938</td>
+ <td>59,638</td>
+ <td class="orange">3.81</td>
+ <td>$23.71</td>
+ </tr>
+ <tr>
+ <td class="highlight">14 days</td>
+ <td>$2,083</td>
+ <td>$149</td>
+ <td class="red">12</td>
+ <td class="red">$173.55</td>
+ <td>92,629</td>
+ <td>32,528</td>
+ <td>2.85</td>
+ <td>$22.48</td>
+ </tr>
+ <tr style="background: rgba(239,68,68,0.05);">
+ <td class="highlight">7 days</td>
+ <td>$1,059</td>
+ <td>$151</td>
+ <td class="red">6</td>
+ <td class="red">$176.55</td>
+ <td>45,900</td>
+ <td>19,461</td>
+ <td>2.36</td>
+ <td>$23.08</td>
+ </tr>
+ </tbody>
+ </table>
+
+ <div class="three-col">
+ <div class="insight-box red">
+ <h4>CPA Deterioration</h4>
+ <p><strong style="color: var(--text-primary);">Prior 30d</strong> (14 Mar to 12 Apr): 55 subs at $104 CPA<br>
+ <strong style="color: var(--text-primary);">Last 30d</strong> (13 Apr to 12 May): 30 subs at $179 CPA<br>
+ That's a <strong style="color: var(--accent-red);">73% CPA increase</strong> with effectively flat daily spend. Efficiency dropped off a cliff.</p>
+ </div>
+ <div class="insight-box orange">
+ <h4>CPM is stable, so it's not auction cost</h4>
+ <p>CPM has held flat at $22-24 across all windows. The problem is conversion rate post-click, not media cost. That points to creative fatigue and/or landing-page friction, not market dynamics.</p>
+ </div>
+ <div class="insight-box purple">
+ <h4>Frequency is the early warning</h4>
+ <p>Broad ad set frequency: 1.79 (over 14d on prior data) to 2.39 (14d current) to 2.99 (30d). The same audience is seeing the same ads repeatedly. That's why CPM holds but CPA climbs. Audience saturation, not auction shift.</p>
+ </div>
+ </div>
+
+ <div class="slide-footer">
+ <span>RV Weather | Meta Ads Strategic Audit</span>
+ <span>04 / 14</span>
+ </div>
+ </section>
+
+ <!-- SLIDE 5: Ad Set Performance -->
+ <section class="slide">
+ <span class="slide-number">05 / 14</span>
+ <div class="slide-tag">Ad Set Analysis</div>
+ <h2>Ad Set Performance Breakdown</h2>
+
+ <h3 style="margin-top: 8px;">90-Day View (HM | Scaling Campaign)</h3>
+ <table class="data-table">
+ <thead>
+ <tr>
+ <th>Ad Set</th>
+ <th>Status</th>
+ <th>Spend</th>
+ <th>Subs</th>
+ <th>CPA</th>
+ <th>Impressions</th>
+ <th>Daily Budget</th>
+ <th>Verdict</th>
+ </tr>
+ </thead>
+ <tbody>
+ <tr style="background: rgba(0,217,165,0.05);">
+ <td class="highlight">Broad (Advantage+)</td>
+ <td><span class="tag green">Active</span></td>
+ <td>$5,988</td>
+ <td class="green">48</td>
+ <td class="green">$124.75</td>
+ <td>264,579</td>
+ <td>$100</td>
+ <td><span class="tag green">Scale up carefully</span></td>
+ </tr>
+ <tr>
+ <td class="highlight">Interest Stack</td>
+ <td><span class="tag orange">Inactive</span></td>
+ <td>$2,018</td>
+ <td>18</td>
+ <td class="green">$112.13</td>
+ <td>78,359</td>
+ <td>$50</td>
+ <td><span class="tag">Reactivate as test</span></td>
+ </tr>
+ <tr>
+ <td class="highlight">Lookalike Stacked (Purchase + Site)</td>
+ <td><span class="tag green">Active</span></td>
+ <td>$1,560</td>
+ <td class="orange">9</td>
+ <td class="red">$173.34</td>
+ <td>55,784</td>
+ <td>$50</td>
+ <td><span class="tag orange">Rebuild</span></td>
+ </tr>
+ <tr>
+ <td class="highlight">Lookalike Stacked 3% (Purchase + Customers)</td>
+ <td><span class="tag orange">Inactive</span></td>
+ <td>$1,219</td>
+ <td>10</td>
+ <td class="green">$121.94</td>
+ <td>40,812</td>
+ <td>$50</td>
+ <td><span class="tag">Reactivate</span></td>
+ </tr>
+ <tr>
+ <td class="highlight">Broad, Homepage (free + annual)</td>
+ <td><span class="tag red">Never delivered</span></td>
+ <td>$0</td>
+ <td>0</td>
+ <td>n/a</td>
+ <td>0</td>
+ <td>$50</td>
+ <td><span class="tag red">Launch or archive</span></td>
+ </tr>
+ </tbody>
+ </table>
+
+ <div class="two-col">
+ <div class="insight-box">
+ <h4>Worth flagging, inactive sets outperformed actives</h4>
+ <p>Interest Stack ($112 CPA) and 3% LAL ($122 CPA), both currently inactive, had cleaner economics than the active Lookalike Stacked ($173). The previous buyer paused the wrong sets. Reactivating Interest Stack with refreshed creative is a quick win.</p>
+ </div>
+ <div class="insight-box red">
+ <h4>Last 7d: Lookalike is burning cash</h4>
+ <p>$314 spent on Lookalike Stacked (Purchase + Site) in last 7d for <strong style="color: var(--accent-red);">zero SureRoute Annual conversions</strong>. The "Learning" status visible in the targeting screenshot suggests Meta reset learning after the last edit (12 May). Either commit budget for it to exit learning, or pause and rebuild.</p>
+ </div>
+ </div>
+
+ <div class="slide-footer">
+ <span>RV Weather | Meta Ads Strategic Audit</span>
+ <span>05 / 14</span>
+ </div>
+ </section>
+
+ <!-- SLIDE 6: Account structure -->
+ <section class="slide">
+ <span class="slide-number">06 / 14</span>
+ <div class="slide-tag">Account Architecture</div>
+ <h2>Targeting &amp; Structure Review</h2>
+
+ <div class="two-col">
+ <div class="card">
+ <h4 style="color: var(--accent-green);">What's well-built</h4>
+ <ul class="check-list">
+ <li>Single scaling campaign (HM | Scaling), clean CBO setup using ad-set-level budgets</li>
+ <li>Advantage+ audience enabled across all sets, gives Meta room to optimise</li>
+ <li>Sensible geo: US + Canada with AK/HI excluded (avoiding low-converting fringe geos)</li>
+ <li>Age 25-65+, appropriate for RV demo skew older</li>
+ <li>Custom Audiences for retargeting/exclusion exist (5 lookalikes ready)</li>
+ <li>Strong custom event setup: SureRoute Annual as primary conversion (Match Quality 7.7/10)</li>
+ </ul>
+ </div>
+ <div class="card" style="border-color: rgba(239, 68, 68, 0.3);">
+ <h4 style="color: var(--accent-red);">What's broken or stale</h4>
+ <ul class="check-list">
+ <li class="red"><strong>26 ads</strong> in the Lookalike Stacked ad set, way over Meta's recommended 4-6 active variants per ad set, fragmenting learning</li>
+ <li class="red"><strong>21 ads</strong> in Broad, same problem</li>
+ <li class="red"><strong>No retargeting ad set</strong> for trial-starters or PageView-but-not-purchase</li>
+ <li class="red">3 customer-list audiences (RVWx Daily, Starter Tier, Membership) <strong>locked behind "Accept terms"</strong>, sitting unused since May 2024</li>
+ <li class="red">No exclusion of existing customers from prospecting sets</li>
+ <li class="red">The "Broad Homepage" ad set has never spent, wasted real estate</li>
+ <li class="red">Lookalikes built on 180d window when 730d is now available for purchase events (per Meta's May 2026 update)</li>
+ </ul>
+ </div>
+ </div>
+
+ <div class="insight-box brand">
+ <h4>Take</h4>
+ <p>The account is set up as a <strong style="color: var(--text-primary);">prospecting-only machine</strong>. There's no retargeting layer, no funnel logic, and the prospecting ad sets are creatively cluttered. The 26-ad Lookalike set means Meta can only meaningfully optimise to 4-5 of those creatives. The other 20+ are dilution. The fix is structural before it's creative.</p>
+ </div>
+
+ <div class="slide-footer">
+ <span>RV Weather | Meta Ads Strategic Audit</span>
+ <span>06 / 14</span>
+ </div>
+ </section>
+
+ <!-- SLIDE 7: Creative Analysis -->
+ <section class="slide">
+ <span class="slide-number">07 / 14</span>
+ <div class="slide-tag">Creative Performance</div>
+ <h2>What's Working &amp; What's Not</h2>
+
+ <h3 style="margin-top: 8px;">Top creatives, 90 days aggregated across all ad sets</h3>
+ <table class="data-table">
+ <thead>
+ <tr>
+ <th>Ad Name</th>
+ <th>Spend</th>
+ <th>Subs</th>
+ <th>CPA</th>
+ <th>CPM</th>
+ <th>Quality Ranking</th>
+ </tr>
+ </thead>
+ <tbody>
+ <tr style="background: rgba(0,217,165,0.05);">
+ <td class="highlight">Avoids Dangerous Crosswinds (2 Spring-14) </td>
+ <td>$4,348</td>
+ <td class="green">39</td>
+ <td class="green">$111.49</td>
+ <td>$23.67</td>
+ <td>Average</td>
+ </tr>
+ <tr>
+ <td class="highlight">Weather Aware Routing</td>
+ <td>$1,363</td>
+ <td class="green">11</td>
+ <td class="green">$123.92</td>
+ <td>$18.91</td>
+ <td>Average</td>
+ </tr>
+ <tr>
+ <td class="highlight">Weather vs RV Weather Comparison (2 Spring-16)</td>
+ <td>$1,004</td>
+ <td class="green">8</td>
+ <td class="green">$125.55</td>
+ <td>$26.87</td>
+ <td class="green">Above average</td>
+ </tr>
+ <tr>
+ <td class="highlight">Eric B. Testimonial</td>
+ <td>$682</td>
+ <td class="green">6</td>
+ <td class="green">$113.74</td>
+ <td>$27.14</td>
+ <td>Average</td>
+ </tr>
+ <tr>
+ <td class="highlight">Check the Weather for Your Route (1 Spring-01)</td>
+ <td>$231</td>
+ <td class="green">5</td>
+ <td class="green">$46.29</td>
+ <td>$26.32</td>
+ <td>Average</td>
+ </tr>
+ <tr>
+ <td class="highlight">New RVer? Add RV Weather to Your Kit (1 Spring-07)</td>
+ <td>$354</td>
+ <td>4</td>
+ <td class="green">$88.39</td>
+ <td>$33.22</td>
+ <td>Average</td>
+ </tr>
+ <tr style="background: rgba(239,68,68,0.05);">
+ <td class="highlight">Katherine: "Saved Our Life" Video </td>
+ <td>$1,231</td>
+ <td class="red">6</td>
+ <td class="red">$205.12</td>
+ <td>$30.39</td>
+ <td>Average</td>
+ </tr>
+ <tr style="background: rgba(239,68,68,0.05);">
+ <td class="highlight">Katherine: What Google Maps Never Can, Copy </td>
+ <td>$331</td>
+ <td class="red">1</td>
+ <td class="red">$330.74</td>
+ <td>$26.05</td>
+ <td>Average</td>
+ </tr>
+ </tbody>
+ </table>
+
+ <div class="three-col">
+ <div class="card">
+ <h4 style="color: var(--accent-green);">The winning pattern</h4>
+ <p style="font-size: 13px;">Specific weather-pain angles (<strong>crosswinds</strong>, <strong>comparison vs generic weather</strong>) outperform generic value-prop ads. Direct-response statics beat polished testimonial videos on cost-per-conversion in this account. That's unusual but data-supported here.</p>
+ </div>
+ <div class="card">
+ <h4 style="color: var(--accent-red);">The losing pattern</h4>
+ <p style="font-size: 13px;">Long-form "Saved Our Life" testimonial video burned $1,231 for 6 conversions ($205 CPA). The "What Google Maps Never Can" angle is a $331 sunk cost. Brand-style storytelling video isn't converting, possibly too long-form for this top-of-funnel audience.</p>
+ </div>
+ <div class="card">
+ <h4 style="color: var(--accent-brand-light);">Hook-Video series is invisible</h4>
+ <p style="font-size: 13px;">All 4 Hook-Video creatives have minimal spend (under $20 each) and zero conversions. They were never given budget to learn. Either kill them or rotate into a structured creative test ad set with $30-50/day each.</p>
+ </div>
+ </div>
+
+ <div class="slide-footer">
+ <span>RV Weather | Meta Ads Strategic Audit</span>
+ <span>07 / 14</span>
+ </div>
+ </section>
+
+ <!-- SLIDE 8: Creative Fatigue -->
+ <section class="slide">
+ <span class="slide-number">08 / 14</span>
+ <div class="slide-tag">Creative Fatigue</div>
+ <h2>The Top Creative Is Wearing Out</h2>
+
+ <h3 style="margin-top: 8px;">"Weather Aware Routing" performance decay by window</h3>
+ <table class="data-table" style="margin-bottom: 24px;">
+ <thead>
+ <tr>
+ <th>Window</th>
+ <th>Spend</th>
+ <th>Subs</th>
+ <th>CPA</th>
+ <th>Change vs 90d baseline</th>
+ </tr>
+ </thead>
+ <tbody>
+ <tr><td class="highlight">90 days</td><td>$1,363</td><td>11</td><td class="green">$123.92</td><td class="green">baseline</td></tr>
+ <tr><td class="highlight">30 days</td><td>$1,356</td><td>11</td><td class="green">$123.24</td><td class="green">flat</td></tr>
+ <tr><td class="highlight">14 days</td><td>$914</td><td>6</td><td class="orange">$152.34</td><td class="orange">+23%</td></tr>
+ <tr style="background: rgba(239,68,68,0.05);"><td class="highlight">7 days</td><td>$442</td><td class="red">2</td><td class="red">$221.24</td><td class="red">+79%</td></tr>
+ </tbody>
+ </table>
+
+ <h3>"Avoids Dangerous Crosswinds", already paused but worth flagging</h3>
+ <table class="data-table">
+ <thead>
+ <tr><th>Window</th><th>Spend</th><th>Subs</th><th>CPA</th><th>Note</th></tr>
+ </thead>
+ <tbody>
+ <tr><td class="highlight">90 days</td><td>$4,348</td><td class="green">39</td><td class="green">$111.49</td><td>Lifetime hero ad, 45% of all conversions</td></tr>
+ <tr><td class="highlight">30 days</td><td>$1,327</td><td class="orange">4</td><td class="red">$331.83</td><td>CPA tripled before pause</td></tr>
+ <tr><td class="highlight">14 days</td><td>$0</td><td>0</td><td>n/a</td><td>Paused (correctly)</td></tr>
+ </tbody>
+ </table>
+
+ <div class="two-col" style="margin-top: 24px;">
+ <div class="insight-box orange">
+ <h4>The fatigue signature</h4>
+ <p>Both top performers show the same curve: stable performance for 60+ days, then CPA roughly doubles over 14-30 days as frequency builds and Broad audience saturates. CPM stays flat, this is post-click conversion rate collapsing, not auction price.</p>
+ </div>
+ <div class="insight-box red">
+ <h4>What this means right now</h4>
+ <p>"Weather Aware Routing" is heading the same way "Avoids Dangerous Crosswinds" did. If CPA continues this trajectory it'll cross $250 within 7-14 days. <strong style="color: var(--text-primary);">Either it gets a creative refresh (new hook, new opening 3 seconds, same body) or it gets paused and replaced.</strong> Letting it ride is the worst option.</p>
+ </div>
+ </div>
+
+ <div class="slide-footer">
+ <span>RV Weather | Meta Ads Strategic Audit</span>
+ <span>08 / 14</span>
+ </div>
+ </section>
+
+ <!-- SLIDE 9: Conversion tracking -->
+ <section class="slide">
+ <span class="slide-number">09 / 14</span>
+ <div class="slide-tag">Funnel &amp; Tracking</div>
+ <h2>Funnel Health Check</h2>
+
+ <div class="metrics-grid four-col">
+ <div class="metric-card orange">
+ <div class="metric-label">PageView (Event Match Quality)</div>
+ <div class="metric-value">5.7/10</div>
+ <div class="metric-change down">100% events flagged</div>
+ </div>
+ <div class="metric-card orange">
+ <div class="metric-label">Lead (Match Quality)</div>
+ <div class="metric-value">6.2/10</div>
+ <div class="metric-change neutral">210 events</div>
+ </div>
+ <div class="metric-card green">
+ <div class="metric-label">Purchase (Match Quality)</div>
+ <div class="metric-value">7.7/10</div>
+ <div class="metric-change up">122 events, pixel and CAPI</div>
+ </div>
+ <div class="metric-card green">
+ <div class="metric-label">SureRoute Annual (Match)</div>
+ <div class="metric-value">7.7/10</div>
+ <div class="metric-change up">122 events, pixel and CAPI</div>
+ </div>
+ </div>
+
+ <h3 style="margin-top: 8px;">Funnel conversion rates (last 28 days, account-wide)</h3>
+ <table class="data-table">
+ <thead><tr><th>Stage</th><th>Volume</th><th>CVR from previous</th><th>Industry benchmark</th><th>Verdict</th></tr></thead>
+ <tbody>
+ <tr><td class="highlight">PageView</td><td>43,800</td><td>n/a</td><td>n/a</td><td>n/a</td></tr>
+ <tr><td class="highlight">Lead (trial signup)</td><td>210</td><td class="red">0.48%</td><td class="green">2-5%</td><td class="red">Way under</td></tr>
+ <tr><td class="highlight">Purchase (SureRoute Annual)</td><td>122</td><td class="orange">58%</td><td class="green">15-30%</td><td class="green">Strong (trial-to-paid)</td></tr>
+ </tbody>
+ </table>
+
+ <div class="two-col" style="margin-top: 24px;">
+ <div class="insight-box red">
+ <h4>Active diagnostic errors</h4>
+ <p><strong style="color: var(--text-primary);">1. PageView CAPI sending invalid client emails (100% of events).</strong> Server is hashing placeholder strings like "test@gmail.com" or "null", Meta can't match these to user identities, degrading audience-building and attribution across the whole account.<br><br>
+ <strong style="color: var(--text-primary);">2. WordPress.com unverified domain</strong> started sending data 27 March 2026. Either it's legitimate (allowlist it) or it's a tracking misconfiguration.</p>
+ </div>
+ <div class="insight-box orange">
+ <h4>The real funnel problem</h4>
+ <p>The PageView to Lead conversion rate of 0.48% is <strong style="color: var(--accent-red);">10x below benchmark</strong>. With 43.8K PageViews you'd expect 850-2,000 trial signups, not 210. <strong style="color: var(--text-primary);">This is where most of the revenue lift sits</strong>. Not in ad optimisation, in landing page conversion rate. See slide 11 for the CRO audit.</p>
+ </div>
+ </div>
+
+ <div class="slide-footer">
+ <span>RV Weather | Meta Ads Strategic Audit</span>
+ <span>09 / 14</span>
+ </div>
+ </section>
+
+ <!-- SLIDE 10: Unit Economics -->
+ <section class="slide">
+ <span class="slide-number">10 / 14</span>
+ <div class="slide-tag">Unit Economics <span class="data-flag">Modelled, needs Stripe data to verify</span></div>
+ <h2>The CAC: LTV Reality Check</h2>
+
+ <div class="comparison">
+ <div class="comparison-box old">
+ <h4 style="color: var(--accent-red); margin-bottom: 12px;">CURRENT 30d CPA</h4>
+ <div class="metric-value" style="font-size: 36px; color: var(--accent-red);">$179</div>
+ <p style="font-size: 13px; margin-top: 12px; color: var(--text-muted);">Last 30 days</p>
+ <p style="font-size: 13px; color: var(--accent-red); margin-top: 8px;">Above estimated break-even</p>
+ </div>
+ <div class="comparison-vs">vs</div>
+ <div class="comparison-box new">
+ <h4 style="color: var(--accent-green); margin-bottom: 12px;">TARGET CPA</h4>
+ <div class="metric-value" style="font-size: 36px; color: var(--accent-green);">&lt; $100</div>
+ <p style="font-size: 13px; margin-top: 12px; color: var(--text-muted);">Y1 profitability threshold</p>
+ <p style="font-size: 13px; color: var(--accent-green); margin-top: 8px;">Achievable with current setup</p>
+ </div>
+ </div>
+
+ <div class="three-col">
+ <div class="card">
+ <h4 style="color: var(--accent-purple);">Pricing reality</h4>
+ <table class="data-table" style="margin: 16px 0 0 0;">
+ <tr><td>Annual subscription</td><td class="highlight">$99.99</td></tr>
+ <tr><td>Monthly subscription</td><td class="highlight">$19.99/mo</td></tr>
+ <tr><td>Free trial</td><td class="highlight">7-day</td></tr>
+ <tr><td>SaaS gross margin (est.)</td><td class="highlight">~75%</td></tr>
+ <tr><td><strong>Y1 contribution per annual sub</strong></td><td class="green">~$75</td></tr>
+ </table>
+ </div>
+ <div class="card">
+ <h4 style="color: var(--accent-brand-light);">LTV model (annual subs)</h4>
+ <table class="data-table" style="margin: 16px 0 0 0;">
+ <tr><td>Y1 revenue</td><td class="highlight">$100</td></tr>
+ <tr><td>Y2 (50% renewal)</td><td class="highlight">+$50</td></tr>
+ <tr><td>Y3 (70% of Y2)</td><td class="highlight">+$35</td></tr>
+ <tr><td>3-year LTV</td><td class="green">$185</td></tr>
+ <tr><td><strong>3y contribution margin</strong></td><td class="green">~$139</td></tr>
+ </table>
+ </div>
+ <div class="card">
+ <h4 style="color: var(--accent-green);">Break-even CPA by horizon</h4>
+ <table class="data-table" style="margin: 16px 0 0 0;">
+ <tr><td>Y1 break-even</td><td class="orange">$75</td></tr>
+ <tr><td>Y2 break-even</td><td class="green">$112</td></tr>
+ <tr><td>Y3 break-even</td><td class="green">$139</td></tr>
+ <tr><td>Current 90d CPA</td><td class="orange">$134</td></tr>
+ <tr><td>Current 7d CPA</td><td class="red">$177</td></tr>
+ </table>
+ </div>
+ </div>
+
+ <div class="insight-box brand" style="margin-top: 24px;">
+ <h4>Net of all this</h4>
+ <p>At a 3-year LTV horizon, the account was <strong style="color: var(--accent-green);">barely profitable</strong> over the 90-day average ($134 CPA vs $139 break-even). But the recent trend ($177 CPA last 7d) means we're now <strong style="color: var(--accent-red);">losing $38 per acquired customer</strong> even over a generous 3-year horizon. The math doesn't allow waiting for it to recover. Every week at current CPA is burning money.</p>
+ </div>
+
+ <div class="slide-footer">
+ <span>RV Weather | Meta Ads Strategic Audit</span>
+ <span>10 / 14</span>
+ </div>
+ </section>
+
+ <!-- SLIDE 11: CRO Audit -->
+ <section class="slide">
+ <span class="slide-number">11 / 14</span>
+ <div class="slide-tag">CRO Audit</div>
+ <h2>Holiday 2025 Landing Page Review</h2>
+
+ <div class="two-col">
+ <div>
+ <h3>What's strong</h3>
+ <ul class="check-list">
+ <li>Hero promises specific benefit: "drive smarter, travel safer"</li>
+ <li>SureRoute is the named hero product, clear positioning</li>
+ <li>Dave Titley credibility built in (Navy meteorologist, 50 years experience)</li>
+ <li>Pricing transparent: $99.99 annual, $19.99 monthly</li>
+ <li>30-day money-back guarantee de-risks the purchase</li>
+ <li>Testimonials/reviews layered through the page</li>
+ <li>Free 7-day trial removes top-of-funnel friction</li>
+ </ul>
+
+ <h3 style="margin-top: 32px;">What's hurting conversion</h3>
+ <ul class="check-list">
+ <li class="red">Page is a <strong>holiday-themed URL</strong> being run in May, temporal mismatch erodes trust</li>
+ <li class="red"><strong>Slow above-the-fold</strong>: hero requires scrolling before primary CTA appears clearly</li>
+ <li class="red">No <strong>scarcity, urgency or risk-reversal</strong> in the headline</li>
+ <li class="red"><strong>Pricing &gt; conversion-rate-killer</strong> shown before perceived value built</li>
+ <li class="red">No <strong>video sales letter (VSL)</strong> at top, text-heavy</li>
+ <li class="red">Pixel sending invalid emails. The <strong>page is breaking CAPI</strong> at form level</li>
+ <li class="red">No <strong>exit-intent capture</strong> visible</li>
+ <li class="red">Ad creative says "Built by a Navy meteorologist" but the <strong>landing page doesn't lead with this</strong>, so there's a message-match miss</li>
+ </ul>
+ </div>
+ <div>
+ <div class="card" style="background: var(--bg-card); padding: 0; overflow: hidden;">
+ <div style="padding: 20px; border-bottom: 1px solid var(--border);">
+ <h4 style="color: var(--accent-brand-light); margin-bottom: 4px;">Conversion math</h4>
+ <p style="font-size: 12px; color: var(--text-muted);">Last 28 days, account-wide</p>
+ </div>
+ <div style="padding: 20px;">
+ <div style="display:flex; justify-content: space-between; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--border);">
+ <span style="color: var(--text-secondary); font-size: 13px;">PageViews</span>
+ <span class="highlight" style="color: var(--text-primary); font-weight: 600;">43,800</span>
+ </div>
+ <div style="display:flex; justify-content: space-between; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--border);">
+ <span style="color: var(--text-secondary); font-size: 13px;">Leads (trial signups)</span>
+ <span style="color: var(--accent-red); font-weight: 600;">210 (0.48%)</span>
+ </div>
+ <div style="display:flex; justify-content: space-between; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--border);">
+ <span style="color: var(--text-secondary); font-size: 13px;">Purchases</span>
+ <span style="color: var(--accent-green); font-weight: 600;">122</span>
+ </div>
+ <div style="display:flex; justify-content: space-between;">
+ <span style="color: var(--text-secondary); font-size: 13px;">Trial-to-paid</span>
+ <span style="color: var(--accent-green); font-weight: 600;">58%</span>
+ </div>
+ </div>
+ </div>
+
+ <div class="insight-box red" style="margin-top: 24px;">
+ <h4>Where the drop-off is</h4>
+ <p>Trial-to-paid is <strong style="color: var(--accent-green);">strong at 58%</strong> (benchmark 15-30%); once someone signs up for the trial, the product does the selling.<br><br>
+ <strong style="color: var(--text-primary);">The leak is PageView to Lead at 0.48%</strong>. If we move that to even a conservative 1.5%, leads triple to ~650/month and (at 58% trial-to-paid) purchases triple to ~375/month, at the same ad spend.</p>
+ </div>
+
+ <div class="insight-box brand" style="margin-top: 16px;">
+ <h4>The biggest single fix</h4>
+ <p>Landing page CRO is the highest-ROI fix in this account. We're scaling on a leaky bucket. Every dollar in ad optimisation works <strong>3x harder</strong> once LP conversion is fixed.</p>
+ </div>
+ </div>
+ </div>
+
+ <div class="slide-footer">
+ <span>RV Weather | Meta Ads Strategic Audit</span>
+ <span>11 / 14</span>
+ </div>
+ </section>
+
+ <!-- SLIDE 12: Strategic Action Plan -->
+ <section class="slide">
+ <span class="slide-number">12 / 14</span>
+ <div class="slide-tag">Action Plan</div>
+ <h2>Week 1-2 Priorities</h2>
+
+ <div class="three-col">
+ <div class="concept-card">
+ <span class="concept-number" style="color: rgba(239,68,68,0.15);">01</span>
+ <div class="concept-title">Stop the waste</div>
+ <span class="tag red">Day 1-3</span>
+ <p style="font-size: 13px; margin-top: 12px; position: relative; z-index: 1; color: var(--text-secondary);">Immediate budget protection.</p>
+ <ul class="check-list" style="font-size: 12px;">
+ <li class="red">Pause Lookalike Stacked (Purchase+Site), $314 wasted last 7d</li>
+ <li class="red">Refresh or pause "Weather Aware Routing", CPA up 79%</li>
+ <li class="red">Archive the "Broad Homepage" ad set (never delivered)</li>
+ <li class="red">Cap Broad daily budget at current $100, don't scale a fatiguing set</li>
+ </ul>
+ <p style="font-size: 11px; color: var(--accent-red); font-weight: 600; margin-top: 8px;">Protects ~$60-80/day</p>
+ </div>
+
+ <div class="concept-card">
+ <span class="concept-number" style="color: rgba(245,158,11,0.15);">02</span>
+ <div class="concept-title">Fix tracking integrity</div>
+ <span class="tag orange">Day 1-7</span>
+ <p style="font-size: 13px; margin-top: 12px; position: relative; z-index: 1; color: var(--text-secondary);">Clean signal first.</p>
+ <ul class="check-list" style="font-size: 12px;">
+ <li class="orange">Diagnose &amp; fix invalid email CAPI issue (100% PageView events)</li>
+ <li class="orange">Verify wordpress.com domain, allowlist or block</li>
+ <li class="orange">Add purchase_value parameter to SureRoute Annual event</li>
+ <li class="orange">Accept terms on the 3 dormant customer-list audiences for retargeting/exclusion</li>
+ </ul>
+ <p style="font-size: 11px; color: var(--accent-orange); font-weight: 600; margin-top: 8px;">Gets audience data clean again</p>
+ </div>
+
+ <div class="concept-card">
+ <span class="concept-number" style="color: rgba(0,217,165,0.15);">03</span>
+ <div class="concept-title">Restructure for clean learning</div>
+ <span class="tag green">Day 3-10</span>
+ <p style="font-size: 13px; margin-top: 12px; position: relative; z-index: 1; color: var(--text-secondary);">Let Meta actually learn.</p>
+ <ul class="check-list" style="font-size: 12px;">
+ <li>Consolidate to <strong>4-6 active ads per ad set</strong> max</li>
+ <li>Reactivate Interest Stack ($112 CPA at 90d) with refreshed creative</li>
+ <li>Build a new <strong>Retargeting ad set</strong> (PageView 30d, exclude purchasers)</li>
+ <li>Rebuild Lookalikes on 730d purchase window (Meta May 2026 update)</li>
+ </ul>
+ <p style="font-size: 11px; color: var(--accent-green); font-weight: 600; margin-top: 8px;">Cleaner attribution and fresh audience reach</p>
+ </div>
+ </div>
+
+ <h3 style="margin-top: 32px;">Week 2-4: Foundation rebuild</h3>
+ <div class="three-col">
+ <div class="card">
+ <h4 style="color: var(--accent-brand-light);">04. CRO Sprint</h4>
+ <ul class="check-list" style="font-size: 12px;">
+ <li>Build a non-holiday-themed evergreen landing page</li>
+ <li>Lead with "Built by a Navy meteorologist" hook (matches winning ad copy)</li>
+ <li>Add 30-second VSL above the fold</li>
+ <li>A/B test: pricing-first vs benefits-first hero</li>
+ <li>Add exit-intent &amp; abandoned-trial email capture</li>
+ </ul>
+ </div>
+ <div class="card">
+ <h4 style="color: var(--accent-purple);">05. Creative pipeline</h4>
+ <ul class="check-list" style="font-size: 12px;">
+ <li>3 new statics in "Avoids Dangerous Crosswinds" angle family (winning concept)</li>
+ <li>2 new statics in "Weather vs RV Weather" comparison family (above-avg quality)</li>
+ <li>Test 3 short-form hooks (sub-15s) for the Dave Titley credibility angle</li>
+ <li>Test 2 customer-pain UGC-style videos (Eric B. testimonial was $113 CPA)</li>
+ </ul>
+ </div>
+ <div class="card">
+ <h4 style="color: var(--accent-green);">06. Funnel layer</h4>
+ <ul class="check-list" style="font-size: 12px;">
+ <li>Retargeting ad set: trial-starters to annual upsell offer</li>
+ <li>Retargeting ad set: video viewers 75% to trial sign-up</li>
+ <li>Exclude existing customers (3 customer-list audiences) from prospecting</li>
+ <li>Test annual-discount offer specifically for monthly subscribers</li>
+ </ul>
+ </div>
+ </div>
+
+ <div class="slide-footer">
+ <span>RV Weather | Meta Ads Strategic Audit</span>
+ <span>12 / 14</span>
+ </div>
+ </section>
+
+ <!-- SLIDE 13: Scaling Strategy -->
+ <section class="slide">
+ <span class="slide-number">13 / 14</span>
+ <div class="slide-tag">Scaling Roadmap</div>
+ <h2>30 / 60 / 90 Day Plan</h2>
+
+ <div class="three-col">
+ <div class="card" style="border-top: 3px solid var(--accent-orange);">
+ <h3>Days 0-30: Steady the ship</h3>
+ <p style="font-size: 13px; margin-bottom: 16px; color: var(--text-secondary);">Hold spend flat. Fix the basics.</p>
+ <h4 style="margin-top: 16px; font-size: 12px;">Targets:</h4>
+ <ul class="check-list" style="font-size: 12px;">
+ <li>Daily spend: <strong>$150/day</strong> (current level)</li>
+ <li>CPA target: <strong>&lt;$130</strong></li>
+ <li>Pixel match quality &gt; 7.5/10 across all events</li>
+ <li>PageView to Lead CVR: <strong>0.8%+</strong> (vs 0.48% today)</li>
+ <li>4-6 ads max per active ad set</li>
+ </ul>
+ <h4 style="margin-top: 16px; font-size: 12px;">Watch for:</h4>
+ <p style="font-size: 12px; color: var(--text-muted);">Learning resets while restructuring; expect 7-10 days of volatile CPA. Don't react to noise.</p>
+ </div>
+
+ <div class="card" style="border-top: 3px solid var(--accent-purple);">
+ <h3>Days 30-60: Tighten and test</h3>
+ <p style="font-size: 13px; margin-bottom: 16px; color: var(--text-secondary);">Scale up what works. Add retargeting.</p>
+ <h4 style="margin-top: 16px; font-size: 12px;">Targets:</h4>
+ <ul class="check-list" style="font-size: 12px;">
+ <li>Daily spend: <strong>$250-300/day</strong> (+67-100%)</li>
+ <li>CPA target: <strong>&lt;$110</strong></li>
+ <li>New evergreen landing page live, lifting Lead CVR to <strong>1.5%+</strong></li>
+ <li>Retargeting ad set delivering at &lt;$60 CPA</li>
+ <li>3 new creative concepts in market and tested</li>
+ </ul>
+ <h4 style="margin-top: 16px; font-size: 12px;">Moves:</h4>
+ <p style="font-size: 12px; color: var(--text-muted);">Scale up 20% every 3-4 days on Broad once CPA &lt; $120 sustainably. Push Interest Stack reactivation. Test 730d Lookalike.</p>
+ </div>
+
+ <div class="card" style="border-top: 3px solid var(--accent-green);">
+ <h3>Days 60-90: Push</h3>
+ <p style="font-size: 13px; margin-bottom: 16px; color: var(--text-secondary);">Scale confidently once the economics are proven.</p>
+ <h4 style="margin-top: 16px; font-size: 12px;">Targets:</h4>
+ <ul class="check-list" style="font-size: 12px;">
+ <li>Daily spend: <strong>$500/day</strong> (3.3x current)</li>
+ <li>CPA target: <strong>&lt;$100</strong> (Y1 profitable)</li>
+ <li>Monthly subs: 150+ (vs current ~30/mo)</li>
+ <li>Implied Y1 ROAS: <strong>1.0x+</strong> (3y ROAS ~1.85x)</li>
+ <li>2 new ad-set concepts live (e.g. Advantage+ Sales campaign in parallel)</li>
+ </ul>
+ <h4 style="margin-top: 16px; font-size: 12px;">Opens up:</h4>
+ <p style="font-size: 12px; color: var(--text-muted);">Layer in monthly sub funnel (different LTV math, more permission to spend). Test seasonal angle (peak RV season = May-Sep).</p>
+ </div>
+ </div>
+
+ <h3 style="margin-top: 40px;">Scaling principles</h3>
+ <div class="metrics-grid four-col">
+ <div class="metric-card green">
+ <div class="metric-label">Scale by</div>
+ <div class="metric-value" style="font-size: 22px;">20% / 3 days</div>
+ <div class="metric-change neutral">When CPA below target for 3+ days</div>
+ </div>
+ <div class="metric-card red">
+ <div class="metric-label">Pause when</div>
+ <div class="metric-value" style="font-size: 22px;">CPA &gt; $180</div>
+ <div class="metric-change neutral">After $400+ spend, no signal</div>
+ </div>
+ <div class="metric-card orange">
+ <div class="metric-label">Refresh when</div>
+ <div class="metric-value" style="font-size: 22px;">Freq &gt; 3.5</div>
+ <div class="metric-change neutral">Or CPM rising 20%+</div>
+ </div>
+ <div class="metric-card purple">
+ <div class="metric-label">Test always</div>
+ <div class="metric-value" style="font-size: 22px;">15% budget</div>
+ <div class="metric-change neutral">Dedicated creative test ad set</div>
+ </div>
+ </div>
+
+ <div class="slide-footer">
+ <span>RV Weather | Meta Ads Strategic Audit</span>
+ <span>13 / 14</span>
+ </div>
+ </section>
+
+ <!-- SLIDE 14: Summary -->
+ <section class="slide">
+ <span class="slide-number">14 / 14</span>
+ <div class="slide-tag">Summary</div>
+ <h2>Summary &amp; Next Steps</h2>
+
+ <div class="three-col">
+ <div class="card" style="border-top: 3px solid var(--accent-red);">
+ <h3>Stop</h3>
+ <ul class="check-list" style="font-size: 13px;">
+ <li class="red">Running Lookalike Stacked at zero conversions</li>
+ <li class="red">Letting CAPI send invalid emails (100% of PageView)</li>
+ <li class="red">Riding "Weather Aware Routing" into the ground</li>
+ <li class="red">Cluttering ad sets with 20-26 ads at once</li>
+ <li class="red">Sending paid traffic to a Christmas-themed landing page in May</li>
+ </ul>
+ </div>
+ <div class="card" style="border-top: 3px solid var(--accent-purple);">
+ <h3>Start</h3>
+ <ul class="check-list" style="font-size: 13px;">
+ <li>Refreshing "Crosswinds" angle family (winning concept lineage)</li>
+ <li>Adding a retargeting ad set with the trial offer</li>
+ <li>Building an evergreen landing page with VSL + Dave Titley hook</li>
+ <li>Measuring CPA weekly against $110 break-even target</li>
+ <li>Reconciling Meta vs Stripe weekly until match quality is verified</li>
+ </ul>
+ </div>
+ <div class="card" style="border-top: 3px solid var(--accent-green);">
+ <h3>90-day targets</h3>
+ <ul class="check-list" style="font-size: 13px;">
+ <li>Daily spend: <strong>$500/day</strong> (vs $150 today)</li>
+ <li>CPA: <strong>&lt;$100</strong> (vs $179 last 30d)</li>
+ <li>Monthly subs: <strong>150+</strong> (vs ~30/mo)</li>
+ <li>Implied 3y ROAS: <strong>~1.85x</strong></li>
+ <li>PageView to Lead CVR: <strong>1.5%+</strong></li>
+ </ul>
+ </div>
+ </div>
+
+ <div class="insight-box" style="margin-top: 32px; border-left-color: var(--accent-brand);">
+ <h4 style="color: var(--accent-brand-light);">The bigger picture</h4>
+ <p>RV Weather has an unusually strong asset stack for paid acquisition: a credible founder story (Navy meteorologist, 50yr forecasting), a defensible product (SureRoute algorithm), zero serious competitors, strong trial-to-paid conversion at 58%, and a subscription LTV that gives us permission to spend up to about $135 per Y3 customer. <strong style="color: var(--text-primary);">The previous buyer built something that worked at first then let it drift.</strong> Creative fatigue went unmanaged, structural issues compounded, and the landing page leak went unfixed while ad spend kept flowing. All of this is fixable. With tidying up structure in weeks 1-2, rebuilding the basics in weeks 3-4, and scaling properly in weeks 5-12, this account can credibly hit <strong style="color: var(--accent-green);">3x its current sub volume on 3.3 times the spend at a profitable CPA</strong> by Q3 2026.</p>
+ </div>
+
+ <div class="slide-footer">
+ <span>RV Weather | Meta Ads Strategic Audit</span>
+ <span>Prepared 13 May 2026 | Charles Heath | Heath Media</span>
+ </div>
+ </section>
+
+</body>
+</html>
