@@ -75,7 +75,7 @@
     padding:38px 0 26px;
     overflow:hidden;
   }
-  .hero-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:48px;align-items:center}
+  .hero-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:48px;align-items:start}
   .eyebrow{
     display:inline-flex;align-items:center;gap:8px;
     font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
@@ -151,10 +151,10 @@
   .float-tag .ic{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font-size:15px;flex:none}
   .float-tag small{display:block;font-weight:500;color:var(--ink-soft);font-size:11.5px}
   .ft-a{right:-10px;top:30%;animation:bob 5s ease-in-out infinite}
-  .ft-b{left:-14px;bottom:16%;animation:bob 5s ease-in-out infinite .8s}
+  .ft-b{left:-14px;bottom:22%;animation:bob 5s ease-in-out infinite .8s}
   @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
 
-  .runtally{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px;max-width:520px}
+  .runtally{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:42px}
   .runtally div{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 14px;text-align:center;box-shadow:0 6px 18px -12px rgba(16,21,31,.3);font-size:12.5px;color:var(--ink-soft);font-weight:700;letter-spacing:.01em}
   .runtally b{display:block;font-size:28px;color:var(--ink);font-weight:900;letter-spacing:-.03em;margin-bottom:3px;line-height:1}
   .runtally b.amber{color:var(--orange)}
@@ -371,12 +371,6 @@
           <span><span class="ck">✓</span> No app to install</span>
         </div>
       </div>
-
-      <div class="runtally">
-        <div><b>13,000+</b> routes planned</div>
-        <div><b class="amber">15.2M</b> miles covered</div>
-        <div><b>50 yrs</b> forecasting expertise</div>
-      </div>
     </div>
 
     <div class="hero-visual">
@@ -395,7 +389,11 @@
         <div class="float-tag ft-b"><span class="ic" style="background:#cdeede">🛣️</span><div>Safer route found<small>+12 min, 1 fewer storm</small></div></div>
         <div class="guarantee-badge"><span class="seal">30<br>DAY</span><div><b>Money-back guarantee</b><small>Try it risk-free</small></div></div>
       </div>
-      <p class="vis-cap">See exactly how SureRoute turns a wall of weather into a safer route, before you ever leave the campsite.</p>
+      <div class="runtally">
+        <div><b>13,000+</b> routes planned</div>
+        <div><b class="amber">15.2M</b> miles covered</div>
+        <div><b>50 yrs</b> forecasting expertise</div>
+      </div>
     </div>
   </div>
 </header>
