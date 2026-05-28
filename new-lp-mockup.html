@@ -75,7 +75,7 @@
     padding:38px 0 26px;
     overflow:hidden;
   }
-  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:46px;align-items:center}
+  .hero-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:48px;align-items:center}
   .eyebrow{
     display:inline-flex;align-items:center;gap:8px;
     font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
@@ -94,12 +94,12 @@
   /* offer card */
   .offer{
     background:#fff;border:1px solid var(--line);border-radius:20px;
-    padding:20px;box-shadow:var(--shadow);max-width:440px;
+    padding:24px;box-shadow:var(--shadow);width:100%;max-width:520px;
   }
   .offer .price-row{display:flex;align-items:baseline;gap:10px;margin-bottom:4px}
-  .offer .big{font-size:42px;font-weight:900;letter-spacing:-.04em;color:var(--ink)}
-  .offer .big span{font-size:18px;font-weight:700;color:var(--ink-soft);margin-left:4px}
-  .offer .sub2{font-size:14px;color:var(--ink-soft);margin-bottom:16px}
+  .offer .big{font-size:48px;font-weight:900;letter-spacing:-.04em;color:var(--ink)}
+  .offer .big span{font-size:19px;font-weight:700;color:var(--ink-soft);margin-left:5px}
+  .offer .sub2{font-size:14.5px;color:var(--ink-soft);margin-bottom:18px}
   .btn{
     display:block;width:100%;text-align:center;text-decoration:none;
     background:var(--blue-bright);color:#fff;font-weight:800;font-size:18px;
@@ -122,9 +122,11 @@
 
   /* hero visual */
   .hero-visual{position:relative}
+  .vis-stage{position:relative}
+  .vis-cap{margin-top:18px;text-align:center;font-size:14.5px;color:var(--ink-soft);font-weight:500;max-width:34em;margin-left:auto;margin-right:auto;line-height:1.5}
   .device{
-    border-radius:18px;overflow:hidden;border:1px solid var(--line);
-    box-shadow:var(--shadow);position:relative;aspect-ratio:16/10;
+    border-radius:20px;overflow:hidden;border:1px solid var(--line);
+    box-shadow:var(--shadow);position:relative;aspect-ratio:4/3;
     background:
       radial-gradient(closest-side at 32% 58%, rgba(214,43,31,.85), rgba(238,108,26,.6) 45%, rgba(246,178,27,.35) 70%, transparent 80%),
       radial-gradient(closest-side at 70% 30%, rgba(246,178,27,.6), transparent 75%),
@@ -152,9 +154,10 @@
   .ft-b{left:-14px;bottom:16%;animation:bob 5s ease-in-out infinite .8s}
   @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
 
-  .runtally{display:flex;gap:26px;margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}
-  .runtally div{font-size:13px;color:var(--ink-soft);font-weight:600}
-  .runtally b{display:block;font-size:23px;color:var(--ink);font-weight:900;letter-spacing:-.02em}
+  .runtally{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px;max-width:520px}
+  .runtally div{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 14px;text-align:center;box-shadow:0 6px 18px -12px rgba(16,21,31,.3);font-size:12.5px;color:var(--ink-soft);font-weight:700;letter-spacing:.01em}
+  .runtally b{display:block;font-size:28px;color:var(--ink);font-weight:900;letter-spacing:-.03em;margin-bottom:3px;line-height:1}
+  .runtally b.amber{color:var(--orange)}
 
   /* hero trust signals */
   .trust-row{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin:0 0 12px}
@@ -166,8 +169,9 @@
   .trust-faces .fc{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:12.5px;font-weight:800;border:2px solid var(--paper);margin-left:-10px;box-shadow:0 2px 6px rgba(16,21,31,.18)}
   .trust-faces .fc:first-child{margin-left:0}
   .trust-faces .more{width:34px;height:34px;border-radius:50%;background:var(--blue-deep);color:#fff;font-weight:800;font-size:14px;display:grid;place-items:center;margin-left:-10px;border:2px solid var(--paper)}
-  .trust-built{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13.5px;color:var(--ink-soft);font-weight:600;margin-bottom:18px;line-height:1.4}
-  .trust-built b{color:var(--ink);font-weight:800}
+  .trust-built{display:flex;align-items:center;gap:10px;flex-wrap:nowrap;font-size:13px;color:var(--ink-soft);font-weight:600;margin-bottom:18px;line-height:1.4}
+  .trust-built .tb-txt{flex:1;min-width:0}
+  .trust-built b{color:var(--ink);font-weight:800;white-space:nowrap}
   .vbadge{flex:none;background:#fff;border:1px solid var(--line);color:var(--blue-deep);font-weight:800;font-size:12px;letter-spacing:.03em;padding:5px 11px;border-radius:30px}
 
   .guarantee-badge{
@@ -245,6 +249,19 @@
   .q.feat{background:var(--blue-deep);color:#fff;grid-row:span 1}
   .q.feat cite{color:rgba(255,255,255,.8)}
 
+  /* video testimonials */
+  .vidtest{background:var(--paper-2)}
+  .vt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:920px;margin:0 auto}
+  .vt{margin:0}
+  .vt-vid{
+    position:relative;aspect-ratio:9/16;border-radius:18px;overflow:hidden;
+    background:#0c1322;border:1px solid var(--line);box-shadow:var(--shadow);
+  }
+  .vt-vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .vt figcaption{padding:16px 4px 0}
+  .vt figcaption h3{font-family:'Source Serif 4',serif;font-weight:600;font-size:17px;line-height:1.35;letter-spacing:-.01em;margin-bottom:6px}
+  .vt figcaption p{font-size:13.5px;color:var(--ink-soft);font-weight:700}
+
   /* founder */
   .founder{background:var(--ink);color:#fff;border-radius:24px;padding:clamp(28px,4vw,48px);display:grid;grid-template-columns:1.4fr 1fr;gap:40px;align-items:center}
   .founder .kick{color:var(--amber);font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px}
@@ -284,8 +301,12 @@
   .rv.in{opacity:1;transform:none}
 
   @media(max-width:900px){
-    .hero-grid,.save,.founder{grid-template-columns:1fr;gap:32px}
+    .hero-grid,.save,.founder{grid-template-columns:1fr;gap:28px}
+    .hero-grid{display:flex;flex-direction:column}
+    .hero-text{order:1}
+    .hero-visual{order:2;position:static;top:auto}
     .steps,.quotes{grid-template-columns:1fr}
+    .vt-grid{grid-template-columns:1fr;max-width:340px}
     .ben-grid{grid-template-columns:1fr}
     .vs{grid-template-columns:1fr}
     .vs-div{display:none}
@@ -294,6 +315,10 @@
     .float-tag{display:none}
     .guarantee-badge{display:none}
     .offer{max-width:100%}
+    .device{aspect-ratio:16/10}
+    .vis-cap{display:none}
+    .trust-built{flex-wrap:wrap}
+    .trust-built .tb-txt{flex:1 1 100%}
   }
 </style>
 </head>
@@ -311,7 +336,7 @@
 <!-- HERO -->
 <header class="hero">
   <div class="wrap hero-grid">
-    <div>
+    <div class="hero-text">
       <span class="eyebrow"><span class="pulse"></span>Weather-aware route planning for RVers</span>
       <h1>The weather wasn't the problem. The <span class="u">timing and the route</span> were.</h1>
       <p class="sub">RV Weather checks the wind, snow, storms and visibility along your <b>entire route</b>, then shows you a safer way around it, days before you ever start driving.</p>
@@ -328,7 +353,7 @@
           <span class="more">+</span>
         </div>
       </div>
-      <div class="trust-built"><span class="vbadge">★ Veteran owned</span> Built by a Navy meteorologist with <b>50 years</b> of forecasting experience</div>
+      <div class="trust-built"><span class="vbadge">★ Veteran owned</span> <span class="tb-txt">Built by a Navy meteorologist with <b>50 years</b> of forecasting experience</span></div>
 
       <div class="offer">
         <div class="price-row">
@@ -349,25 +374,28 @@
 
       <div class="runtally">
         <div><b>13,000+</b> routes planned</div>
-        <div><b>15.2M</b> miles covered</div>
+        <div><b class="amber">15.2M</b> miles covered</div>
         <div><b>50 yrs</b> forecasting expertise</div>
       </div>
     </div>
 
     <div class="hero-visual">
-      <div class="device">
-        <div class="grid-tex"></div>
-        <svg class="route-svg" viewBox="0 0 100 62" preserveAspectRatio="none">
-          <path d="M14,52 C30,46 34,30 48,28 C62,26 66,16 86,12" fill="none" stroke="#1d3acc" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="3 2.4" opacity=".85"/>
-          <circle cx="14" cy="52" r="2.2" fill="#1a9e57"/>
-          <circle cx="86" cy="12" r="2.2" fill="#d62b1f"/>
-        </svg>
-        <span class="map-badge"><span class="lv"></span>Live · updated hourly</span>
-        <iframe src="https://videopress.com/embed/dws4WUWU?autoPlay=1&controls=1&loop=1&muted=1&playsinline=1&persistVolume=0&useAverageColor=1" frameborder="0" allowfullscreen allow="clipboard-write" title="SureRoute demo" loading="lazy"></iframe>
+      <div class="vis-stage">
+        <div class="device">
+          <div class="grid-tex"></div>
+          <svg class="route-svg" viewBox="0 0 100 62" preserveAspectRatio="none">
+            <path d="M14,52 C30,46 34,30 48,28 C62,26 66,16 86,12" fill="none" stroke="#1d3acc" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="3 2.4" opacity=".85"/>
+            <circle cx="14" cy="52" r="2.2" fill="#1a9e57"/>
+            <circle cx="86" cy="12" r="2.2" fill="#d62b1f"/>
+          </svg>
+          <span class="map-badge"><span class="lv"></span>Live · updated hourly</span>
+          <iframe src="https://videopress.com/embed/dws4WUWU?autoPlay=1&controls=1&loop=1&muted=1&playsinline=1&persistVolume=0&useAverageColor=1" frameborder="0" allowfullscreen allow="clipboard-write" title="SureRoute demo" loading="lazy"></iframe>
+        </div>
+        <div class="float-tag ft-a"><span class="ic" style="background:#ffe2c2">🌪️</span><div>Crosswind alert<small>Reroute suggested</small></div></div>
+        <div class="float-tag ft-b"><span class="ic" style="background:#cdeede">🛣️</span><div>Safer route found<small>+12 min, 1 fewer storm</small></div></div>
+        <div class="guarantee-badge"><span class="seal">30<br>DAY</span><div><b>Money-back guarantee</b><small>Try it risk-free</small></div></div>
       </div>
-      <div class="float-tag ft-a"><span class="ic" style="background:#ffe2c2">🌪️</span><div>Crosswind alert<small>Reroute suggested</small></div></div>
-      <div class="float-tag ft-b"><span class="ic" style="background:#cdeede">🛣️</span><div>Safer route found<small>+12 min, 1 fewer storm</small></div></div>
-      <div class="guarantee-badge"><span class="seal">30<br>DAY</span><div><b>Money-back guarantee</b><small>Try it risk-free</small></div></div>
+      <p class="vis-cap">See exactly how SureRoute turns a wall of weather into a safer route, before you ever leave the campsite.</p>
     </div>
   </div>
 </header>
@@ -525,7 +553,46 @@
   </div>
 </section>
 
-<!-- FOUNDER -->
+<!-- VIDEO TESTIMONIALS -->
+<section class="vidtest">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="kick">In their own words</div>
+      <h2>Real RVers, real saves</h2>
+      <p>Hear what using RV Weather on the road actually feels like.</p>
+    </div>
+    <div class="vt-grid">
+      <figure class="vt rv">
+        <div class="vt-vid">
+          <iframe src="https://videopress.com/embed/cu9zkYVq" frameborder="0" allowfullscreen allow="clipboard-write" title="Kim Heck testimonial" loading="lazy"></iframe>
+        </div>
+        <figcaption>
+          <h3>"We got to enjoy the ride, versus panicking."</h3>
+          <p>Kim Heck, longtime customer</p>
+        </figcaption>
+      </figure>
+      <figure class="vt rv">
+        <div class="vt-vid">
+          <iframe src="https://videopress.com/embed/TSjMfYOt" frameborder="0" allowfullscreen allow="clipboard-write" title="Lynda Hallmark testimonial" loading="lazy"></iframe>
+        </div>
+        <figcaption>
+          <h3>"I'd rather pay a monthly fee than risk damage to my trailer."</h3>
+          <p>Lynda Hallmark, solo traveler</p>
+        </figcaption>
+      </figure>
+      <figure class="vt rv">
+        <div class="vt-vid">
+          <iframe src="https://videopress.com/embed/xxHBjlAJ" frameborder="0" allowfullscreen allow="clipboard-write" title="Darlene Lund testimonial" loading="lazy"></iframe>
+        </div>
+        <figcaption>
+          <h3>"This is everything I've been looking for!"</h3>
+          <p>Darlene Lund, RVer</p>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
 <section style="padding-top:8px">
   <div class="wrap">
     <div class="founder rv">
