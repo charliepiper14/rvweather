@@ -148,7 +148,8 @@
     border-radius:14px;padding:11px 14px;box-shadow:var(--shadow);font-size:13px;font-weight:700;
     display:flex;align-items:center;gap:9px;
   }
-  .float-tag .ic{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font-size:15px;flex:none}
+  .float-tag .ic{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;flex:none}
+  .float-tag .ic svg{width:17px;height:17px;stroke:var(--ink);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
   .float-tag small{display:block;font-weight:500;color:var(--ink-soft);font-size:11.5px}
   .ft-a{right:-10px;top:30%;animation:bob 5s ease-in-out infinite}
   .ft-b{left:-14px;bottom:14%;animation:bob 5s ease-in-out infinite .8s}
@@ -209,8 +210,12 @@
   .vs-col.weak h3{color:rgba(255,255,255,.6)}
   .vs-col.strong h3{color:var(--amber)}
   .vs-col ul{list-style:none;display:flex;flex-direction:column;gap:14px}
-  .vs-col li{display:flex;gap:11px;font-size:15.5px;line-height:1.4}
+  .vs-col li{display:flex;gap:11px;font-size:15.5px;line-height:1.45;align-items:flex-start}
   .vs-col li .mk{flex:none;font-weight:900;font-size:15px;margin-top:1px}
+  .vs-col li .t{flex:1}
+  .vs-col li em{font-family:'Archivo',sans-serif;font-style:normal;font-weight:800}
+  .vs-col.weak li em{color:#fff}
+  .vs-col.strong li em{color:var(--amber)}
   .weak li .mk{color:#ff7a6e}
   .strong li .mk{color:#36d07e}
   .vs-div{width:1px;background:linear-gradient(transparent,rgba(255,255,255,.25),transparent);position:relative}
@@ -220,7 +225,8 @@
   .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
   .step{background:#fff;border:1px solid var(--line);border-radius:18px;padding:28px 24px;position:relative;overflow:hidden}
   .step .n{font-family:'Source Serif 4',serif;font-size:54px;font-weight:600;color:var(--paper-2);line-height:.8;position:absolute;right:18px;top:14px}
-  .step .ic{width:48px;height:48px;border-radius:13px;display:grid;place-items:center;font-size:22px;margin-bottom:16px;background:var(--sky)}
+  .step .ic{width:48px;height:48px;border-radius:13px;display:grid;place-items:center;margin-bottom:16px;background:var(--sky)}
+  .step .ic svg{width:24px;height:24px;stroke:var(--blue-deep);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
   .step h3{font-size:19px;margin-bottom:9px}
   .step p{font-size:15px;color:var(--ink-soft)}
 
@@ -228,7 +234,8 @@
   .benefits{background:var(--paper-2)}
   .ben-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 30px;max-width:900px;margin:0 auto}
   .ben{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)}
-  .ben .ic{flex:none;width:34px;height:34px;border-radius:9px;background:#fff;border:1px solid var(--line);display:grid;place-items:center;font-size:16px}
+  .ben .ic{flex:none;width:38px;height:38px;border-radius:10px;background:#fff;border:1px solid var(--line);display:grid;place-items:center}
+  .ben .ic svg{width:19px;height:19px;stroke:var(--blue-deep);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
   .ben b{font-size:16px}
   .ben p{font-size:14.5px;color:var(--ink-soft);margin-top:2px}
 
@@ -385,8 +392,8 @@
           <span class="map-badge"><span class="lv"></span>Live · updated hourly</span>
           <iframe src="https://videopress.com/embed/dws4WUWU?autoPlay=1&controls=1&loop=1&muted=1&playsinline=1&persistVolume=0&useAverageColor=1" frameborder="0" allowfullscreen allow="clipboard-write" title="SureRoute demo" loading="lazy"></iframe>
         </div>
-        <div class="float-tag ft-a"><span class="ic" style="background:#ffe2c2">🌪️</span><div>Crosswind alert<small>Reroute suggested</small></div></div>
-        <div class="float-tag ft-b"><span class="ic" style="background:#cdeede">🛣️</span><div>Safer route found<small>+12 min, 1 fewer storm</small></div></div>
+        <div class="float-tag ft-a"><span class="ic" style="background:#ffe2c2"><svg viewBox="0 0 24 24" style="stroke:#b45309"><path d="M3 8h11a3 3 0 1 0-3-3"/><path d="M3 12h15a3 3 0 1 1-3 3"/><path d="M3 16h9a2.5 2.5 0 1 1-2.5 2.5"/></svg></span><div>Crosswind alert<small>Reroute suggested</small></div></div>
+        <div class="float-tag ft-b"><span class="ic" style="background:#cdeede"><svg viewBox="0 0 24 24" style="stroke:#1a7a45"><path d="M5 19s2-8 8-8 8-8 8-8"/><circle cx="5" cy="19" r="1.8" style="fill:#1a7a45;stroke:none"/><circle cx="21" cy="3" r="1.8" style="fill:#1a7a45;stroke:none"/></svg></span><div>Safer route found<small>+12 min, 1 fewer storm</small></div></div>
         <div class="guarantee-badge"><span class="seal">30<br>DAY</span><div><b>Money-back guarantee</b><small>Try it risk-free</small></div></div>
       </div>
       <div class="runtally">
@@ -422,20 +429,20 @@
         <div class="vs-col weak">
           <h3>Generic weather &amp; GPS apps</h3>
           <ul>
-            <li><span class="mk">✕</span> Show weather <em>at cities</em>, not along your whole route</li>
-            <li><span class="mk">✕</span> Leave you to guess what 35mph crosswinds mean for towing</li>
-            <li><span class="mk">✕</span> Route you down roads no RV should be on</li>
-            <li><span class="mk">✕</span> React to weather once you're already in it</li>
+            <li><span class="mk">✕</span><span class="t">Show weather <em>at cities</em>, not along your whole route</span></li>
+            <li><span class="mk">✕</span><span class="t">Leave you to guess what 35mph crosswinds mean for towing</span></li>
+            <li><span class="mk">✕</span><span class="t">Route you down roads no RV should be on</span></li>
+            <li><span class="mk">✕</span><span class="t">React to weather once you're already in it</span></li>
           </ul>
         </div>
         <div class="vs-div"><span>vs</span></div>
         <div class="vs-col strong">
           <h3>RV Weather · SureRoute</h3>
           <ul>
-            <li><span class="mk">✓</span> Maps weather impact across your <em>entire</em> trip, hour by hour</li>
-            <li><span class="mk">✓</span> Translates conditions into RV-specific travel impact</li>
-            <li><span class="mk">✓</span> Routes around low bridges and unsafe roads for your rig</li>
-            <li><span class="mk">✓</span> Generates a different, safer route <em>before</em> you leave</li>
+            <li><span class="mk">✓</span><span class="t">Maps weather impact across your <em>entire</em> trip, hour by hour</span></li>
+            <li><span class="mk">✓</span><span class="t">Translates conditions into RV-specific travel impact</span></li>
+            <li><span class="mk">✓</span><span class="t">Routes around low bridges and unsafe roads for your rig</span></li>
+            <li><span class="mk">✓</span><span class="t">Generates a different, safer route <em>before</em> you leave</span></li>
           </ul>
         </div>
       </div>
@@ -453,19 +460,19 @@
     <div class="steps">
       <div class="step rv">
         <span class="n">1</span>
-        <div class="ic">📍</div>
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
         <h3>Enter your trip</h3>
         <p>Tell SureRoute your start, stops and destination, plus your rig size and how much weather you're comfortable driving in.</p>
       </div>
       <div class="step rv">
         <span class="n">2</span>
-        <div class="ic" style="background:#ffe7bf">🗺️</div>
+        <div class="ic" style="background:#ffe7bf"><svg viewBox="0 0 24 24" style="stroke:#b45309"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg></div>
         <h3>See the weather impact</h3>
         <p>Get a color-coded view of wind, rain, snow, heat and visibility along the whole route, up to 8 days ahead.</p>
       </div>
       <div class="step rv">
         <span class="n">3</span>
-        <div class="ic" style="background:#cdeede">✅</div>
+        <div class="ic" style="background:#cdeede"><svg viewBox="0 0 24 24" style="stroke:#1a7a45"><path d="M3 18s2-7 9-7 9-7 9-7"/><path d="M18 4l3 0 0 3"/><circle cx="3" cy="18" r="1.6" style="fill:#1a7a45;stroke:none"/></svg></div>
         <h3>Drive the smarter route</h3>
         <p>SureRoute suggests safer departure times and routes that dodge the worst conditions, without adding hours to your day.</p>
       </div>
@@ -481,12 +488,12 @@
       <h2>Travel with confidence, not a clenched jaw</h2>
     </div>
     <div class="ben-grid">
-      <div class="ben rv"><span class="ic">🧭</span><div><b>Know the safest day to travel</b><p>Instead of guessing what the weather will do, you plan around it.</p></div></div>
-      <div class="ben rv"><span class="ic">💨</span><div><b>Avoid dangerous crosswinds</b><p>See high-wind corridors before you're white-knuckling the wheel.</p></div></div>
-      <div class="ben rv"><span class="ic">🚐</span><div><b>Routes tailored to your rig</b><p>Bridge clearances and road suitability built in, not car-GPS guesses.</p></div></div>
-      <div class="ben rv"><span class="ic">😌</span><div><b>Less travel stress</b><p>Spot the problem days ahead, not from the driver's seat.</p></div></div>
-      <div class="ben rv"><span class="ic">🕐</span><div><b>Smarter departures</b><p>Leave earlier, later, or shift a day to stay ahead of the system.</p></div></div>
-      <div class="ben rv"><span class="ic">🇨🇦</span><div><b>US &amp; southern Canada</b><p>From the Canadian Maritimes to Baja, we've got the route covered.</p></div></div>
+      <div class="ben rv"><span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M16 8l-2.5 5.5L8 16l2.5-5.5L16 8z"/></svg></span><div><b>Know the safest day to travel</b><p>Instead of guessing what the weather will do, you plan around it.</p></div></div>
+      <div class="ben rv"><span class="ic"><svg viewBox="0 0 24 24"><path d="M3 8h11a3 3 0 1 0-3-3"/><path d="M3 12h15a3 3 0 1 1-3 3"/><path d="M3 16h9a2.5 2.5 0 1 1-2.5 2.5"/></svg></span><div><b>Avoid dangerous crosswinds</b><p>See high-wind corridors before you're white-knuckling the wheel.</p></div></div>
+      <div class="ben rv"><span class="ic"><svg viewBox="0 0 24 24"><path d="M2 7h11v8H2z"/><path d="M13 10h5l3 3v2h-8z"/><circle cx="6.5" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg></span><div><b>Routes tailored to your rig</b><p>Bridge clearances and road suitability built in, not car-GPS guesses.</p></div></div>
+      <div class="ben rv"><span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8.5 14.5s1.3 1.8 3.5 1.8 3.5-1.8 3.5-1.8"/><path d="M8.5 9.5h.01M15.5 9.5h.01"/></svg></span><div><b>Less travel stress</b><p>Spot the problem days ahead, not from the driver's seat.</p></div></div>
+      <div class="ben rv"><span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><div><b>Smarter departures</b><p>Leave earlier, later, or shift a day to stay ahead of the system.</p></div></div>
+      <div class="ben rv"><span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 3.8 5.8 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.8-3.8-9s1.3-6.5 3.8-9z"/></svg></span><div><b>US &amp; southern Canada</b><p>From the Canadian Maritimes to Baja, we've got the route covered.</p></div></div>
     </div>
   </div>
 </section>
