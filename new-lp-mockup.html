@@ -6,24 +6,34 @@
 <title>RV Weather: Check Your Route Before You Drive</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Permanent+Marker&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
 <style>
   :root{
+    /* SureRoute impact palette (from brand PDF) */
+    --imp-great:#b4e2ea;   /* Great Weather */
+    --imp-none:#e6e7e7;    /* No Impacts */
+    --imp-slight:#f9f39e;  /* Slight */
+    --imp-mod:#f5be1a;     /* Moderate - PRIMARY caution yellow */
+    --imp-chal:#f07b22;    /* Challenging */
+    --imp-haz:#e42165;     /* Hazardous */
+    --imp-treach:#891b52;  /* Treacherous */
+    --brand-red:#dd3632;   /* RV Weather wordmark / rally red */
+
     --ink:#10151f;
     --ink-soft:#3a4456;
-    --paper:#f7f5f0;
-    --paper-2:#efeae0;
-    --blue:#1d3acc;
-    --blue-deep:#152a99;
-    --blue-bright:#2a07e3;
-    --sky:#bfe3ea;
-    --amber:#f6b21b;
-    --orange:#ee6c1a;
-    --red:#d62b1f;
-    --plum:#7a2b8f;
+    --paper:#fffdf7;
+    --paper-2:#fbf4e2;
+    --sky:var(--imp-great);
+    --green:#2f8f4e;
+    --green-deep:#1a7a45;
     --line:rgba(16,21,31,.12);
-    --shadow:0 18px 50px -18px rgba(16,21,31,.35);
+    --shadow:0 18px 50px -18px rgba(16,21,31,.32);
+    --shadow-amber:0 16px 34px -14px rgba(245,190,26,.55);
     --maxw:1120px;
+
+    /* action color: caution-orange reads as "go / urgent" against yellow */
+    --action:var(--imp-chal);
+    --action-deep:#d2620f;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
@@ -39,6 +49,16 @@
   h1,h2,h3{line-height:1.05;letter-spacing:-.02em;font-weight:800}
   .serif{font-family:'Source Serif 4',Georgia,serif;font-weight:400}
   em{font-family:'Source Serif 4',Georgia,serif;font-style:italic}
+  .script{font-family:'Permanent Marker',cursive}
+
+  /* ---------- LOGO (recreated road-sign diamond) ---------- */
+  .rvlogo{display:flex;align-items:center;gap:11px;text-decoration:none}
+  .rvlogo svg{display:block;flex:none}
+  .rvlogo .word{display:flex;flex-direction:column;line-height:1}
+  .rvlogo .word .nm{font-family:'Permanent Marker',cursive;font-size:22px;letter-spacing:.5px;color:var(--brand-red)}
+  .rvlogo .word .nm b{color:var(--brand-red)}
+  .rvlogo .word .tag{font-size:9px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);margin-top:3px}
+  footer .rvlogo .word .tag{color:rgba(255,255,255,.6)}
 
   /* ---------- promo strip ---------- */
   .strip{
@@ -46,22 +66,19 @@
     font-size:13.5px;font-weight:600;letter-spacing:.01em;
     padding:9px 16px;
   }
-  .strip b{color:var(--amber)}
+  .strip b{color:var(--imp-mod)}
 
   /* ---------- top bar ---------- */
   .nav{
     position:sticky;top:0;z-index:50;
-    background:rgba(247,245,240,.86);backdrop-filter:blur(10px);
+    background:rgba(255,253,247,.88);backdrop-filter:blur(10px);
     border-bottom:1px solid var(--line);
   }
-  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px}
-  .logo{font-weight:900;font-size:21px;letter-spacing:-.03em;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:8px}
-  .logo .mk{color:var(--red)}
-  .logo .dot{width:10px;height:10px;border-radius:50%;background:var(--amber);box-shadow:0 0 0 4px rgba(246,178,27,.25)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:68px}
   .nav .cta-sm{
-    background:var(--blue-bright);color:#fff;text-decoration:none;
-    font-weight:700;font-size:14px;padding:11px 18px;border-radius:40px;
-    box-shadow:0 8px 20px -8px rgba(42,7,227,.6);transition:transform .15s ease;
+    background:var(--action);color:#fff;text-decoration:none;
+    font-weight:800;font-size:14px;padding:11px 18px;border-radius:40px;
+    box-shadow:0 8px 20px -8px rgba(240,123,34,.7);transition:transform .15s ease;
   }
   .nav .cta-sm:hover{transform:translateY(-1px)}
 
@@ -69,25 +86,25 @@
   .hero{
     position:relative;
     background:
-      radial-gradient(1200px 500px at 78% -8%, rgba(191,227,234,.7), transparent 60%),
-      radial-gradient(900px 600px at -5% 110%, rgba(246,178,27,.16), transparent 55%),
+      radial-gradient(1200px 520px at 80% -10%, rgba(180,226,234,.85), transparent 60%),
+      radial-gradient(900px 620px at -6% 112%, rgba(245,190,26,.22), transparent 55%),
       var(--paper);
-    padding:38px 0 26px;
+    padding:40px 0 28px;
     overflow:hidden;
   }
   .hero-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:48px;align-items:center}
   .eyebrow{
     display:inline-flex;align-items:center;gap:8px;
-    font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
-    color:var(--blue-deep);background:#fff;border:1px solid var(--line);
+    font-size:13px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
+    color:var(--action-deep);background:#fff;border:1px solid var(--line);
     padding:7px 14px;border-radius:40px;margin-bottom:16px;
   }
-  .eyebrow .pulse{width:8px;height:8px;border-radius:50%;background:var(--orange);position:relative}
-  .eyebrow .pulse::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:2px solid var(--orange);animation:ping 1.8s ease-out infinite}
+  .eyebrow .pulse{width:8px;height:8px;border-radius:50%;background:var(--imp-chal);position:relative}
+  .eyebrow .pulse::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:2px solid var(--imp-chal);animation:ping 1.8s ease-out infinite}
   @keyframes ping{0%{transform:scale(.6);opacity:.9}100%{transform:scale(2.2);opacity:0}}
   .hero h1{font-size:clamp(32px,3.9vw,50px);margin-bottom:14px}
   .hero h1 .u{position:relative;white-space:nowrap}
-  .hero h1 .u::after{content:"";position:absolute;left:0;right:0;bottom:.06em;height:.18em;background:var(--amber);z-index:-1;border-radius:2px}
+  .hero h1 .u::after{content:"";position:absolute;left:0;right:0;bottom:.06em;height:.30em;background:var(--imp-mod);z-index:-1;border-radius:2px}
   .hero .sub{font-size:clamp(16px,1.4vw,19px);color:var(--ink-soft);max-width:30em;margin-bottom:18px}
   .hero .sub b{color:var(--ink)}
 
@@ -95,6 +112,7 @@
   .offer{
     background:#fff;border:1px solid var(--line);border-radius:20px;
     padding:24px;box-shadow:var(--shadow);width:100%;max-width:520px;
+    border-top:5px solid var(--imp-mod);
   }
   .offer .price-row{display:flex;align-items:baseline;gap:10px;margin-bottom:4px}
   .offer .big{font-size:48px;font-weight:900;letter-spacing:-.04em;color:var(--ink)}
@@ -102,35 +120,34 @@
   .offer .sub2{font-size:14.5px;color:var(--ink-soft);margin-bottom:18px}
   .btn{
     display:block;width:100%;text-align:center;text-decoration:none;
-    background:var(--blue-bright);color:#fff;font-weight:800;font-size:18px;
+    background:var(--action);color:#fff;font-weight:800;font-size:18px;
     padding:17px 20px;border-radius:48px;letter-spacing:-.01em;
-    box-shadow:0 14px 28px -10px rgba(42,7,227,.7);
+    box-shadow:0 14px 28px -10px rgba(240,123,34,.75);
     transition:transform .15s ease, box-shadow .15s ease;
   }
-  .btn:hover{transform:translateY(-2px);box-shadow:0 20px 36px -10px rgba(42,7,227,.75)}
-  .btn .tiny{display:block;font-size:12.5px;font-weight:600;opacity:.85;margin-top:3px}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 20px 36px -10px rgba(240,123,34,.8)}
+  .btn .tiny{display:block;font-size:12.5px;font-weight:600;opacity:.9;margin-top:3px}
   .btn-ghost{
     display:block;width:100%;text-align:center;text-decoration:none;margin-top:10px;
-    background:transparent;color:var(--blue-deep);font-weight:700;font-size:15px;
-    padding:13px;border-radius:48px;border:1.5px solid rgba(29,58,204,.3);
+    background:transparent;color:var(--action-deep);font-weight:800;font-size:15px;
+    padding:13px;border-radius:48px;border:1.5px solid rgba(240,123,34,.4);
     transition:background .15s ease;
   }
-  .btn-ghost:hover{background:rgba(29,58,204,.06)}
+  .btn-ghost:hover{background:rgba(240,123,34,.07)}
   .reassure{display:flex;flex-wrap:wrap;justify-content:center;gap:9px 16px;margin-top:18px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-soft);font-weight:700}
   .reassure span{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
-  .reassure .ck{color:#1a9e57;font-weight:900}
+  .reassure .ck{color:var(--green-deep);font-weight:900}
 
   /* hero visual */
   .hero-visual{position:relative}
   .vis-stage{position:relative}
-  .vis-cap{margin-top:18px;text-align:center;font-size:14.5px;color:var(--ink-soft);font-weight:500;max-width:34em;margin-left:auto;margin-right:auto;line-height:1.5}
   .device{
     border-radius:20px;overflow:hidden;border:1px solid var(--line);
     box-shadow:var(--shadow);position:relative;aspect-ratio:16/9;
     background:
-      radial-gradient(closest-side at 32% 58%, rgba(214,43,31,.85), rgba(238,108,26,.6) 45%, rgba(246,178,27,.35) 70%, transparent 80%),
-      radial-gradient(closest-side at 70% 30%, rgba(246,178,27,.6), transparent 75%),
-      radial-gradient(closest-side at 80% 75%, rgba(122,43,143,.6), rgba(238,108,26,.4) 60%, transparent 80%),
+      radial-gradient(closest-side at 32% 58%, rgba(228,33,101,.8), rgba(240,123,34,.6) 45%, rgba(245,190,26,.38) 70%, transparent 80%),
+      radial-gradient(closest-side at 70% 30%, rgba(245,190,26,.6), transparent 75%),
+      radial-gradient(closest-side at 80% 75%, rgba(137,27,82,.55), rgba(240,123,34,.4) 60%, transparent 80%),
       linear-gradient(160deg,#e9f4f6 0%,#d4ebef 40%,#eef1ec 100%);
   }
   .device .grid-tex{position:absolute;inset:0;background-image:linear-gradient(rgba(16,21,31,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(16,21,31,.06) 1px,transparent 1px);background-size:34px 34px;opacity:.5;z-index:1}
@@ -142,14 +159,14 @@
     font-size:12px;font-weight:700;padding:7px 12px;border-radius:30px;
     display:flex;align-items:center;gap:7px;
   }
-  .map-badge .lv{width:7px;height:7px;border-radius:50%;background:#36d07e;box-shadow:0 0 0 3px rgba(54,208,126,.3)}
+  .map-badge .lv{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px rgba(54,208,126,.3)}
   .float-tag{
     position:absolute;z-index:4;background:#fff;border:1px solid var(--line);
     border-radius:14px;padding:11px 14px;box-shadow:var(--shadow);font-size:13px;font-weight:700;
     display:flex;align-items:center;gap:9px;
   }
   .float-tag .ic{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;flex:none}
-  .float-tag .ic svg{width:17px;height:17px;stroke:var(--ink);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  .float-tag .ic svg{width:17px;height:17px;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
   .float-tag small{display:block;font-weight:500;color:var(--ink-soft);font-size:11.5px}
   .ft-a{right:-10px;top:30%;animation:bob 5s ease-in-out infinite}
   .ft-b{left:-14px;bottom:14%;animation:bob 5s ease-in-out infinite .8s}
@@ -158,29 +175,30 @@
   .runtally{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:24px}
   .runtally div{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 14px;text-align:center;box-shadow:0 6px 18px -12px rgba(16,21,31,.3);font-size:12.5px;color:var(--ink-soft);font-weight:700;letter-spacing:.01em}
   .runtally b{display:block;font-size:28px;color:var(--ink);font-weight:900;letter-spacing:-.03em;margin-bottom:3px;line-height:1}
-  .runtally b.amber{color:var(--orange)}
+  .runtally b.amber{color:var(--action-deep)}
 
   /* hero trust signals */
   .trust-row{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin:0 0 12px}
   .trust-rating{display:flex;align-items:center;gap:9px}
-  .trust-rating .stars{color:var(--amber);font-size:17px;letter-spacing:1px}
+  .trust-rating .stars{color:var(--imp-mod);font-size:17px;letter-spacing:1px}
   .trust-txt{font-size:14.5px;color:var(--ink-soft);font-weight:600}
   .trust-txt b{color:var(--ink);font-weight:800}
   .trust-faces{display:flex;align-items:center}
   .trust-faces .fc{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:12.5px;font-weight:800;border:2px solid var(--paper);margin-left:-10px;box-shadow:0 2px 6px rgba(16,21,31,.18)}
   .trust-faces .fc:first-child{margin-left:0}
-  .trust-faces .more{width:34px;height:34px;border-radius:50%;background:var(--blue-deep);color:#fff;font-weight:800;font-size:14px;display:grid;place-items:center;margin-left:-10px;border:2px solid var(--paper)}
+  .trust-faces .more{width:34px;height:34px;border-radius:50%;background:var(--brand-red);color:#fff;font-weight:800;font-size:14px;display:grid;place-items:center;margin-left:-10px;border:2px solid var(--paper)}
   .trust-built{display:flex;align-items:center;gap:10px;flex-wrap:nowrap;font-size:13px;color:var(--ink-soft);font-weight:600;margin-bottom:18px;line-height:1.4}
   .trust-built .tb-txt{flex:1;min-width:0}
   .trust-built b{color:var(--ink);font-weight:800;white-space:nowrap}
-  .vbadge{flex:none;background:#fff;border:1px solid var(--line);color:var(--blue-deep);font-weight:800;font-size:12px;letter-spacing:.03em;padding:5px 11px;border-radius:30px}
+  .vbadge{flex:none;display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);color:var(--brand-red);font-weight:800;font-size:12px;letter-spacing:.03em;padding:5px 11px 5px 8px;border-radius:30px}
+  .vbadge svg{width:15px;height:15px;flex:none}
 
   .guarantee-badge{
     position:absolute;z-index:4;right:14px;bottom:14px;
     background:#fff;border:1px solid var(--line);border-radius:14px;
     padding:9px 13px;box-shadow:var(--shadow);display:flex;align-items:center;gap:9px;
   }
-  .guarantee-badge .seal{width:34px;height:34px;border-radius:50%;background:#1a9e57;color:#fff;display:grid;place-items:center;font-weight:900;font-size:11px;line-height:1;text-align:center;flex:none}
+  .guarantee-badge .seal{width:34px;height:34px;border-radius:50%;background:var(--green-deep);color:#fff;display:grid;place-items:center;font-weight:900;font-size:11px;line-height:1;text-align:center;flex:none}
   .guarantee-badge b{font-size:13px;display:block}
   .guarantee-badge small{font-size:11.5px;color:var(--ink-soft)}
 
@@ -194,13 +212,13 @@
   /* sections */
   section{padding:64px 0}
   .sec-head{text-align:center;max-width:36em;margin:0 auto 40px}
-  .sec-head .kick{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--orange);margin-bottom:12px}
+  .sec-head .kick{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--action-deep);margin-bottom:12px}
   .sec-head h2{font-size:clamp(28px,3.2vw,40px);margin-bottom:14px}
   .sec-head p{font-size:18px;color:var(--ink-soft)}
 
   /* objection / comparison */
   .compare{background:var(--ink);color:#fff;border-radius:24px;padding:clamp(28px,4vw,52px);position:relative;overflow:hidden}
-  .compare::before{content:"";position:absolute;inset:0;background:radial-gradient(700px 300px at 90% 0%,rgba(42,7,227,.4),transparent 60%);pointer-events:none}
+  .compare::before{content:"";position:absolute;inset:0;background:radial-gradient(700px 300px at 90% 0%,rgba(245,190,26,.22),transparent 60%);pointer-events:none}
   .compare h2{font-size:clamp(26px,3vw,38px);max-width:14em;margin-bottom:8px;position:relative}
   .compare .lead{color:rgba(255,255,255,.7);font-size:18px;margin-bottom:32px;max-width:30em;position:relative}
   .vs{display:grid;grid-template-columns:1fr auto 1fr;gap:0;align-items:stretch;position:relative}
@@ -208,25 +226,25 @@
   .vs-col.weak{opacity:.72}
   .vs-col h3{font-size:16px;letter-spacing:.04em;text-transform:uppercase;margin-bottom:18px;font-weight:800}
   .vs-col.weak h3{color:rgba(255,255,255,.6)}
-  .vs-col.strong h3{color:var(--amber)}
+  .vs-col.strong h3{color:var(--imp-mod)}
   .vs-col ul{list-style:none;display:flex;flex-direction:column;gap:14px}
   .vs-col li{display:flex;gap:11px;font-size:15.5px;line-height:1.45;align-items:flex-start}
   .vs-col li .mk{flex:none;font-weight:900;font-size:15px;margin-top:1px}
   .vs-col li .t{flex:1}
   .vs-col li em{font-family:'Archivo',sans-serif;font-style:normal;font-weight:800}
   .vs-col.weak li em{color:#fff}
-  .vs-col.strong li em{color:var(--amber)}
-  .weak li .mk{color:#ff7a6e}
-  .strong li .mk{color:#36d07e}
+  .vs-col.strong li em{color:var(--imp-mod)}
+  .weak li .mk{color:var(--imp-haz)}
+  .strong li .mk{color:#42d885}
   .vs-div{width:1px;background:linear-gradient(transparent,rgba(255,255,255,.25),transparent);position:relative}
   .vs-div span{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--ink);border:1px solid rgba(255,255,255,.25);border-radius:50%;width:46px;height:46px;display:grid;place-items:center;font-weight:900;font-size:13px;color:#fff}
 
   /* how it works */
   .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
   .step{background:#fff;border:1px solid var(--line);border-radius:18px;padding:28px 24px;position:relative;overflow:hidden}
-  .step .n{font-family:'Source Serif 4',serif;font-size:54px;font-weight:600;color:var(--paper-2);line-height:.8;position:absolute;right:18px;top:14px}
+  .step .n{font-family:'Permanent Marker',cursive;font-size:48px;color:var(--imp-slight);line-height:.8;position:absolute;right:18px;top:14px}
   .step .ic{width:48px;height:48px;border-radius:13px;display:grid;place-items:center;margin-bottom:16px;background:var(--sky)}
-  .step .ic svg{width:24px;height:24px;stroke:var(--blue-deep);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  .step .ic svg{width:24px;height:24px;stroke:var(--ink);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
   .step h3{font-size:19px;margin-bottom:9px}
   .step p{font-size:15px;color:var(--ink-soft)}
 
@@ -235,7 +253,7 @@
   .ben-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 30px;max-width:900px;margin:0 auto}
   .ben{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)}
   .ben .ic{flex:none;width:38px;height:38px;border-radius:10px;background:#fff;border:1px solid var(--line);display:grid;place-items:center}
-  .ben .ic svg{width:19px;height:19px;stroke:var(--blue-deep);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  .ben .ic svg{width:19px;height:19px;stroke:var(--ink);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
   .ben b{font-size:16px}
   .ben p{font-size:14.5px;color:var(--ink-soft);margin-top:2px}
 
@@ -243,17 +261,18 @@
   .save{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
   .save .vid{border-radius:18px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);aspect-ratio:16/9;position:relative;background:#0c1322}
   .save .vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-  .save .kick{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--orange);margin-bottom:12px}
+  .save .kick{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--action-deep);margin-bottom:12px}
   .save h2{font-size:clamp(26px,3vw,38px);margin-bottom:14px;max-width:12em}
   .save p{font-size:17px;color:var(--ink-soft);margin-bottom:10px}
 
   /* testimonials */
   .quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
   .q{background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px;position:relative}
-  .q .stars{color:var(--amber);font-size:14px;letter-spacing:2px;margin-bottom:12px}
+  .q .stars{color:var(--imp-mod);font-size:14px;letter-spacing:2px;margin-bottom:12px}
   .q blockquote{font-family:'Source Serif 4',serif;font-size:17px;line-height:1.45;margin-bottom:14px}
   .q cite{font-style:normal;font-size:14px;font-weight:700;color:var(--ink-soft)}
-  .q.feat{background:var(--blue-deep);color:#fff;grid-row:span 1}
+  .q.feat{background:var(--ink);color:#fff;grid-row:span 1;border-color:transparent}
+  .q.feat .stars{color:var(--imp-mod)}
   .q.feat cite{color:rgba(255,255,255,.8)}
 
   /* video testimonials */
@@ -271,7 +290,7 @@
 
   /* founder */
   .founder{background:var(--ink);color:#fff;border-radius:24px;padding:clamp(28px,4vw,48px);display:grid;grid-template-columns:1.4fr 1fr;gap:40px;align-items:center}
-  .founder .kick{color:var(--amber);font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px}
+  .founder .kick{color:var(--imp-mod);font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px}
   .founder h2{font-size:clamp(24px,2.6vw,32px);margin-bottom:16px}
   .founder p{color:rgba(255,255,255,.78);font-size:16px;margin-bottom:14px}
   .founder .photo{border-radius:18px;overflow:hidden;aspect-ratio:1;background:#223;border:1px solid rgba(255,255,255,.15)}
@@ -282,7 +301,7 @@
 
   /* final cta */
   .final{text-align:center;background:
-      radial-gradient(800px 400px at 50% 120%, rgba(42,7,227,.12), transparent 60%),
+      radial-gradient(800px 400px at 50% 120%, rgba(245,190,26,.20), transparent 60%),
       var(--paper-2);
     border-radius:24px;padding:clamp(36px,5vw,64px)}
   .final h2{font-size:clamp(28px,3.6vw,44px);max-width:16em;margin:0 auto 16px}
@@ -293,13 +312,14 @@
   details{background:#fff;border:1px solid var(--line);border-radius:14px;margin-bottom:10px;overflow:hidden}
   summary{padding:18px 22px;font-weight:700;font-size:16.5px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px}
   summary::-webkit-details-marker{display:none}
-  summary .pl{flex:none;font-size:22px;font-weight:400;color:var(--blue);transition:transform .2s}
+  summary .pl{flex:none;font-size:22px;font-weight:400;color:var(--action);transition:transform .2s}
   details[open] summary .pl{transform:rotate(45deg)}
   details .ans{padding:0 22px 20px;color:var(--ink-soft);font-size:15.5px}
 
   /* footer */
   footer{background:var(--ink);color:rgba(255,255,255,.6);padding:36px 0;text-align:center;font-size:13.5px;margin-top:50px}
-  footer .logo{color:#fff;justify-content:center;margin-bottom:10px}
+  footer .rvlogo{justify-content:center;margin-bottom:10px}
+  footer .rvlogo .word .nm{color:#fff}
 
   .note{font-size:12.5px;color:var(--ink-soft);text-align:center;margin-top:10px}
 
@@ -323,7 +343,6 @@
     .guarantee-badge{display:none}
     .offer{max-width:100%}
     .device{aspect-ratio:16/10}
-    .vis-cap{display:none}
     .trust-built{flex-wrap:wrap}
     .trust-built .tb-txt{flex:1 1 100%}
   }
@@ -331,11 +350,49 @@
 </head>
 <body>
 
-<div class="strip">Spring offer · <b>Save over $20</b> on your first year · New users only · 30-day money-back guarantee</div>
+<!-- Reusable logo: road-sign diamond + script wordmark -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="rvsign" viewBox="0 0 100 100">
+      <!-- diamond plate -->
+      <rect x="14" y="14" width="72" height="72" rx="10" transform="rotate(45 50 50)" fill="#f5be1a" stroke="#10151f" stroke-width="4"/>
+      <!-- white cloud scene backdrop -->
+      <path d="M30 44c-4 0-7 3-7 6 0 4 3 6 7 6h40c5 0 8-3 8-7 0-4-3-6-7-6 0-5-4-9-9-9-3 0-6 2-7 4-2-3-5-4-8-4-5 0-9 4-9 9-1 0-1 0-1 1z" fill="#fff"/>
+      <!-- sky strip under cloud -->
+      <path d="M27 56h46c0 0-3 4-10 4H37c-7 0-10-4-10-4z" fill="#b4e2ea"/>
+      <!-- trees -->
+      <g fill="#2f8f4e"><path d="M31 36l3 6h-6z"/><path d="M31 41l4 7h-8z"/><path d="M31 46l5 8H26z"/></g>
+      <rect x="30.2" y="53" width="1.6" height="4" fill="#7a4a1e"/>
+      <!-- sun -->
+      <g stroke="#f5be1a" stroke-width="1.4" stroke-linecap="round"><circle cx="46" cy="38" r="2.6" fill="none"/><path d="M46 33v-2M46 45v-2M41 38h-2M53 38h-2M42.5 34.5l-1.4-1.4M50.9 42.9l-1.4-1.4M42.5 41.5l-1.4 1.4M50.9 33.1l-1.4 1.4"/></g>
+      <!-- raindrop -->
+      <path d="M56 36c1.6 1.8 2.4 3 2.4 4a2.4 2.4 0 0 1-4.8 0c0-1 .8-2.2 2.4-4z" fill="#1d6fb8"/>
+      <!-- snowflake -->
+      <g stroke="#7a2b8f" stroke-width="1.2" stroke-linecap="round"><path d="M54 46v6M51 47.5l6 3M57 47.5l-6 3"/></g>
+      <!-- airstream trailer -->
+      <g><path d="M40 48c0-3 4-5 9-5s9 2 9 5v3H40z" fill="#cfd3d8" stroke="#10151f" stroke-width="1.2"/><rect x="42" y="46" width="3.4" height="2.2" rx="1" fill="#fff" stroke="#10151f" stroke-width=".6"/><circle cx="55" cy="50.6" r="1.4" fill="#fff" stroke="#10151f" stroke-width=".6"/><circle cx="46" cy="52" r="1.6" fill="#10151f"/><path d="M58 50h3" stroke="#10151f" stroke-width="1"/></g>
+      <!-- wind lines -->
+      <g stroke="#10151f" stroke-width="1.3" stroke-linecap="round" fill="none"><path d="M61 46c3-1 5 0 5 2s-2 2-3 1"/><path d="M61 49c4-1 7 0 7 2.5s-2.5 2.5-4 1.2"/></g>
+      <!-- script wordmark -->
+      <text x="50" y="68" text-anchor="middle" font-family="'Permanent Marker',cursive" font-size="9.5" fill="#dd3632">RV Weather</text>
+      <path d="M30 70c8 2 32 2 40 0" stroke="#dd3632" stroke-width="1" fill="none" stroke-linecap="round"/>
+      <!-- veteran owned -->
+      <text x="50" y="78" text-anchor="middle" font-family="Archivo,sans-serif" font-size="3.4" font-weight="800" letter-spacing=".4" fill="#10151f">VETERAN OWNED</text>
+      <!-- anchor shield -->
+      <path d="M50 80l5 1.6v3c0 2.4-2.2 3.8-5 4.8-2.8-1-5-2.4-5-4.8v-3z" fill="#1d3a8f"/>
+      <g stroke="#fff" stroke-width=".8" fill="none" stroke-linecap="round"><circle cx="50" cy="83.4" r=".9"/><path d="M50 84.3v3.4M48.2 86.6c0 .9 1 1.5 1.8 1.5s1.8-.6 1.8-1.5M48.4 85.2h3.2"/></g>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="strip">Spring offer · <b>20% off your first year</b> · New users only · 30-day money-back guarantee</div>
 
 <nav class="nav">
   <div class="wrap nav-inner">
-    <a href="#" class="logo"><span class="dot"></span>RV<span class="mk">Weather</span></a>
+    <a href="#" class="rvlogo" aria-label="RV Weather home">
+      <svg width="50" height="50"><use href="#rvsign"/></svg>
+      <span class="word"><span class="nm">RV Weather</span><span class="tag">Drive Smarter · Travel Safer</span></span>
+    </a>
     <a href="https://rvweather.com/register/sr-coupon-annual/?coupon=20SPRING&utm_source=meta&utm_medium=paid_social&utm_campaign=spring2026&utm_content=20pct" class="cta-sm">Start for $0.99 →</a>
   </div>
 </nav>
@@ -351,7 +408,7 @@
       <div class="trust-row">
         <div class="trust-rating">
           <span class="stars">★★★★★</span>
-          <span class="trust-txt">Loved by <b>670+ RVers</b> on the road</span>
+          <span class="trust-txt">Loved by <b>695+ RVers</b> on the road</span>
         </div>
         <div class="trust-faces" aria-hidden="true">
           <span class="fc" style="background:#e08a3c">KB</span>
@@ -360,18 +417,21 @@
           <span class="more">+</span>
         </div>
       </div>
-      <div class="trust-built"><span class="vbadge">★ Veteran owned</span> <span class="tb-txt">Built by a Navy meteorologist with <b>50 years</b> of forecasting experience</span></div>
+      <div class="trust-built">
+        <span class="vbadge"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 2.4v4.6c0 4-3.2 6-7 7.4-3.8-1.4-7-3.4-7-7.4V5.4z" fill="#1d3a8f"/><g stroke="#fff" stroke-width="1.2" fill="none" stroke-linecap="round"><circle cx="12" cy="9" r="1.4"/><path d="M12 10.4v5M9.2 13.6c0 1.5 1.6 2.4 2.8 2.4s2.8-.9 2.8-2.4M9.6 11.8h4.8"/></g></svg>Veteran owned</span>
+        <span class="tb-txt">Built by a Navy meteorologist with <b>50 years</b> of forecasting experience</span>
+      </div>
 
       <div class="offer">
         <div class="price-row">
           <div class="big">$0.99<span> / 7-day trial</span></div>
         </div>
-        <div class="sub2">Try the full SureRoute planner for a week. No coupon needed. Keep it only if it earns its place on your dash.</div>
+        <div class="sub2">Try the full SureRoute planner for a week. No coupon needed. Keep it only if it earns its place.</div>
         <a class="btn" href="https://rvweather.com/register/sr-coupon-annual/?coupon=20SPRING&utm_source=meta&utm_medium=paid_social&utm_campaign=spring2026&utm_content=20pct">
           Start my 7-day trial for $0.99
           <span class="tiny">Plan your next route in the next 5 minutes</span>
         </a>
-        <a class="btn-ghost" href="https://rvweather.com/register/sr-coupon-annual/?coupon=20SPRING&utm_source=meta&utm_medium=paid_social&utm_campaign=spring2026&utm_content=20pct">Or get 12 months for $79.20 (save $20) →</a>
+        <a class="btn-ghost" href="https://rvweather.com/register/sr-coupon-annual/?coupon=20SPRING&utm_source=meta&utm_medium=paid_social&utm_campaign=spring2026&utm_content=20pct">Or get 12 months for $79.20 (20% off) →</a>
         <div class="reassure">
           <span><span class="ck">✓</span> 30-day money-back guarantee</span>
           <span><span class="ck">✓</span> Cancel anytime</span>
@@ -385,15 +445,15 @@
         <div class="device">
           <div class="grid-tex"></div>
           <svg class="route-svg" viewBox="0 0 100 62" preserveAspectRatio="none">
-            <path d="M14,52 C30,46 34,30 48,28 C62,26 66,16 86,12" fill="none" stroke="#1d3acc" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="3 2.4" opacity=".85"/>
-            <circle cx="14" cy="52" r="2.2" fill="#1a9e57"/>
-            <circle cx="86" cy="12" r="2.2" fill="#d62b1f"/>
+            <path d="M14,52 C30,46 34,30 48,28 C62,26 66,16 86,12" fill="none" stroke="#1d3a8f" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="3 2.4" opacity=".85"/>
+            <circle cx="14" cy="52" r="2.2" fill="#1a7a45"/>
+            <circle cx="86" cy="12" r="2.2" fill="#dd3632"/>
           </svg>
           <span class="map-badge"><span class="lv"></span>Live · updated hourly</span>
           <iframe src="https://videopress.com/embed/dws4WUWU?autoPlay=1&controls=1&loop=1&muted=1&playsinline=1&persistVolume=0&useAverageColor=1" frameborder="0" allowfullscreen allow="clipboard-write" title="SureRoute demo" loading="lazy"></iframe>
         </div>
-        <div class="float-tag ft-a"><span class="ic" style="background:#ffe2c2"><svg viewBox="0 0 24 24" style="stroke:#b45309"><path d="M3 8h11a3 3 0 1 0-3-3"/><path d="M3 12h15a3 3 0 1 1-3 3"/><path d="M3 16h9a2.5 2.5 0 1 1-2.5 2.5"/></svg></span><div>Crosswind alert<small>Reroute suggested</small></div></div>
-        <div class="float-tag ft-b"><span class="ic" style="background:#cdeede"><svg viewBox="0 0 24 24" style="stroke:#1a7a45"><path d="M5 19s2-8 8-8 8-8 8-8"/><circle cx="5" cy="19" r="1.8" style="fill:#1a7a45;stroke:none"/><circle cx="21" cy="3" r="1.8" style="fill:#1a7a45;stroke:none"/></svg></span><div>Safer route found<small>+12 min, 1 fewer storm</small></div></div>
+        <div class="float-tag ft-a"><span class="ic" style="background:#ffe2c2"><svg viewBox="0 0 24 24" style="stroke:#d2620f"><path d="M3 8h11a3 3 0 1 0-3-3"/><path d="M3 12h15a3 3 0 1 1-3 3"/><path d="M3 16h9a2.5 2.5 0 1 1-2.5 2.5"/></svg></span><div>High wind alert<small>Reroute suggested</small></div></div>
+        <div class="float-tag ft-b"><span class="ic" style="background:#cdeede"><svg viewBox="0 0 24 24" style="stroke:#1a7a45"><path d="M5 19s2-8 8-8 8-8 8-8"/><circle cx="5" cy="19" r="1.8" style="fill:#1a7a45;stroke:none"/><circle cx="21" cy="3" r="1.8" style="fill:#1a7a45;stroke:none"/></svg></span><div>Safer route found<small>+12 min, fewer bad-weather hours</small></div></div>
         <div class="guarantee-badge"><span class="seal">30<br>DAY</span><div><b>Money-back guarantee</b><small>Try it risk-free</small></div></div>
       </div>
       <div class="runtally">
@@ -466,7 +526,7 @@
       </div>
       <div class="step rv">
         <span class="n">2</span>
-        <div class="ic" style="background:#ffe7bf"><svg viewBox="0 0 24 24" style="stroke:#b45309"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg></div>
+        <div class="ic" style="background:#ffe7bf"><svg viewBox="0 0 24 24" style="stroke:#d2620f"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg></div>
         <h3>See the weather impact</h3>
         <p>Get a color-coded view of wind, rain, snow, heat and visibility along the whole route, up to 8 days ahead.</p>
       </div>
@@ -484,7 +544,7 @@
 <section class="benefits">
   <div class="wrap">
     <div class="sec-head rv">
-      <div class="kick">Why RVers keep it on the dash</div>
+      <div class="kick">Why RVers rely on it</div>
       <h2>Travel with confidence, not a clenched jaw</h2>
     </div>
     <div class="ben-grid">
@@ -629,7 +689,7 @@
           Start my 7-day trial for $0.99
           <span class="tiny">30-day money-back guarantee · Cancel anytime</span>
         </a>
-        <a class="btn-ghost" href="https://rvweather.com/register/sr-coupon-annual/?coupon=20SPRING&utm_source=meta&utm_medium=paid_social&utm_campaign=spring2026&utm_content=20pct">Prefer annual? Get 12 months for $79.20 →</a>
+        <a class="btn-ghost" href="https://rvweather.com/register/sr-coupon-annual/?coupon=20SPRING&utm_source=meta&utm_medium=paid_social&utm_campaign=spring2026&utm_content=20pct">Prefer annual? Get 12 months for $79.20 (20% off) →</a>
       </div>
     </div>
   </div>
@@ -652,7 +712,10 @@
 
 <footer>
   <div class="wrap">
-    <a href="#" class="logo"><span class="dot"></span>RV<span class="mk">Weather</span></a>
+    <a href="#" class="rvlogo">
+      <svg width="46" height="46"><use href="#rvsign"/></svg>
+      <span class="word"><span class="nm">RV Weather</span><span class="tag">Drive Smarter · Travel Safer</span></span>
+    </a>
     <div>Drive Smarter. Travel Safer. · 30-day money-back guarantee for new users.</div>
     <div class="note">Mockup for conversion review. Assets pulled from the live RV Weather site.</div>
   </div>
