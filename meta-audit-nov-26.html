@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RV Weather Meta Audit Deck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,500..800&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#0E141B; --paper:#F4F6F8; --surface:#FFFFFF; --ink:#15202B; --muted:#56626F; --line:#D8DEE5; --soft:#E9EDF2;
+  --accent:#D88A0B; --accent-ink:#935700; --storm:#2E4A6B;
+  --crit:#B83227; --high:#C46A1B; --med:#7C6A0E; --good:#2B7A4B;
+  --crit-bg:#FBE9E7; --high-bg:#FCEFE2; --med-bg:#F6F1D9; --good-bg:#E4F3EA;
+  --f-display:"Archivo","Arial Narrow",Arial,sans-serif;
+  --f-body:"Source Sans 3","Segoe UI",Helvetica,Arial,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);overflow:hidden}
+body{font-family:var(--f-body);color:var(--ink)}
+.stage{position:fixed;inset:0;display:grid;place-items:center}
+.deck{position:relative;width:1280px;height:720px;transform-origin:center center}
+.slide{position:absolute;inset:0;background:var(--paper);padding:56px 72px 52px;display:none;flex-direction:column;gap:26px;overflow:hidden}
+.slide.active{display:flex}
+.slide::after{content:attr(data-n);position:absolute;right:28px;bottom:20px;font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.eyebrow{font-family:var(--f-mono);font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink)}
+h1,h2,h3{font-family:var(--f-display);font-stretch:85%;margin:0;line-height:1.08;text-wrap:balance}
+h1{font-size:72px;font-weight:800;letter-spacing:-.01em}
+h2{font-size:42px;font-weight:780}
+h3{font-size:21px;font-weight:700;font-stretch:90%}
+p{margin:0;font-size:21px;line-height:1.45}
+ul{margin:0;padding-left:22px;display:grid;gap:10px;font-size:20px;line-height:1.4}
+.head{display:grid;gap:10px;border-top:4px solid var(--ink);padding-top:16px}
+.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+.cap{font-size:15px;color:var(--muted)}
+.fill-row{flex:1;min-height:0;display:grid;gap:22px}
+.g2{grid-template-columns:1fr 1fr} .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--line);padding:20px 22px;display:grid;gap:10px;align-content:start}
+.k{font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.big{font-family:var(--f-display);font-stretch:80%;font-weight:800;font-size:64px;line-height:1}
+.stat .big{font-size:58px}
+.stat .l{font-size:17px;color:var(--muted)}
+.stat .s{font-family:var(--f-mono);font-size:13px;color:var(--muted)}
+.verdict{background:var(--surface);border:1px solid var(--line);border-left:8px solid var(--accent);padding:22px 26px;display:grid;gap:10px}
+table{border-collapse:collapse;width:100%;background:var(--surface);border:1px solid var(--line);font-size:17px}
+th,td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--f-mono);font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:500;background:var(--soft)}
+td.n,th.n{text-align:right;font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+tr.hl td{background:var(--good-bg)} tr.bad td{background:var(--crit-bg)} tr.peak td{background:var(--high-bg)}
+.chip{display:inline-block;font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:4px 7px;border-radius:3px;font-weight:500;white-space:nowrap}
+.c-crit{color:var(--crit);background:var(--crit-bg)} .c-high{color:var(--high);background:var(--high-bg)} .c-med{color:var(--med);background:var(--med-bg)}
+.bars{display:grid;gap:14px}
+.bar{display:grid;grid-template-columns:230px 1fr;gap:16px;align-items:center}
+.bar .lab{font-size:18px;line-height:1.2}
+.bar .lab small{display:block;font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.track{position:relative;height:30px;background:var(--soft);margin-right:80px}
+.fill{position:absolute;inset:0 auto 0 0;background:var(--storm)}
+.fill.good{background:var(--good)} .fill.warn{background:var(--high)} .fill.bad{background:var(--crit)}
+.fill span{position:absolute;right:-8px;top:50%;transform:translate(100%,-50%);font-family:var(--f-mono);font-size:16px;white-space:nowrap}
+.ref{position:absolute;top:-5px;bottom:-5px;border-left:2px dashed var(--accent)}
+.ref.ceil{border-left-color:var(--crit)}
+.legend{display:flex;gap:24px;font-family:var(--f-mono);font-size:13px;color:var(--muted)}
+.legend i{display:inline-block;width:18px;border-top:2px dashed var(--accent);vertical-align:middle;margin-right:8px}
+.legend i.ceil{border-top-color:var(--crit)}
+.prio{display:grid;gap:22px;margin:0;padding:0;counter-reset:p}
+.prio li{list-style:none;display:grid;grid-template-columns:64px 1fr;gap:18px;align-items:start}
+.prio li::before{counter-increment:p;content:counter(p);font-family:var(--f-display);font-weight:800;font-size:54px;line-height:.9;color:var(--accent-ink)}
+.prio b{display:block;font-family:var(--f-display);font-stretch:88%;font-size:28px;line-height:1.15;margin-bottom:4px}
+.prio span{font-size:19px;color:var(--muted)}
+.title{background:var(--bg);color:#E5EAF0;justify-content:space-between}
+.title .eyebrow{color:#F0B54A}
+.title .road{height:6px;background:repeating-linear-gradient(90deg,#F0A830 0 60px,transparent 60px 100px)}
+.title .meta{font-family:var(--f-mono);font-size:15px;color:#9AA6B3;display:flex;gap:28px;flex-wrap:wrap}
+.title::after{color:#9AA6B3}
+.nav{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);display:flex;gap:8px;align-items:center;font-family:var(--f-mono);font-size:12px;color:#9AA6B3;z-index:5}
+.nav button{background:#1B2531;color:#E5EAF0;border:1px solid #2A3542;border-radius:4px;padding:6px 12px;font-family:inherit;font-size:12px;cursor:pointer}
+.nav button:focus-visible{outline:2px solid var(--accent)}
+@media print{
+  @page{size:1280px 720px;margin:0}
+  html,body{overflow:visible;height:auto;background:#fff}
+  .stage{position:static;display:block}
+  .deck{transform:none!important;width:1280px;height:auto}
+  .slide{position:relative;display:flex!important;width:1280px;height:720px;page-break-after:always;break-after:page}
+  .nav{display:none}
+}
+</style>
+</head>
+<body>
+<div class="stage"><div class="deck" id="deck">
+
+<!-- 1 -->
+<section class="slide title">
+  <div class="eyebrow">Meta audit and launch plan · 6 November 2026</div>
+  <div style="display:grid;gap:22px">
+    <h1>RV Weather Meta audit</h1>
+    <p style="font-size:26px;color:#C9D2DC;max-width:820px">Where the account stands, what to fix first, and the plan through BFCM to January.</p>
+  </div>
+  <div style="display:grid;gap:18px">
+    <div class="road"></div>
+    <div class="meta"><span>Account 2797396350332381</span><span>12 months to 6 Nov</span><span>90 days from 8 Aug</span><span>BFCM 1 Nov 2025 to 5 Jan 2026</span></div>
+  </div>
+</section>
+
+<!-- 2 -->
+<section class="slide">
+  <div class="head"><div class="eyebrow">Summary</div><h2>The structure works. The bench ran dry.</h2></div>
+  <div class="fill-row g4" style="flex:none">
+    <div class="card stat"><div class="big num">$97</div><div class="l">Cost per purchase, 12 months</div><div class="s">$31,156 · 321 purchases</div></div>
+    <div class="card stat"><div class="big num">$62</div><div class="l">Last 90 days</div><div class="s">$4,119 · 66 purchases</div></div>
+    <div class="card stat"><div class="big num">$73</div><div class="l">BFCM and holiday 2025</div><div class="s">$4,315 · 59 purchases</div></div>
+    <div class="card stat"><div class="big num">$123</div><div class="l">Last week live, 21 to 27 Oct</div><div class="s">$247 · 2 purchases</div></div>
+  </div>
+  <div class="verdict">
+    <p>Protected single-ad cells halved the cost per purchase, from $132 in spring to $67 from July.</p>
+    <p>Then two ads ran out of road in late October and there was nothing behind them. Fix the bench, fix the tracking, and the account is ready to scale into BFCM.</p>
+  </div>
+</section>
+
+<!-- 3 -->
+<section class="slide">
+  <div class="head"><div class="eyebrow">Priorities</div><h2>Three things first</h2></div>
+  <ol class="prio" style="margin-top:10px">
+    <li><div><b>Fix the purchase event before spend restarts</b><span>Trials look to be counted as purchases, which flatters the cost per purchase.</span></div></li>
+    <li><div><b>Relaunch the two proven ads with new hooks</b><span>Test three to four new concepts every fortnight alongside them.</span></div></li>
+    <li><div><b>Run BFCM as its own campaign from 20 November</b><span>So the core ad sets never take a budget shock.</span></div></li>
+  </ol>
+</section>
+
+<!-- 4 -->
+<section class="slide">
+  <div class="head"><div class="eyebrow">Tracking</div><h2>Six fixes, two critical</h2></div>
+  <table>
+    <thead><tr><th></th><th>Issue</th><th>Why it matters</th><th>Fix</th></tr></thead>
+    <tbody>
+      <tr><td><span class="chip c-crit">Critical</span></td><td>Purchase and SureRoute Annual both fired exactly 30 times in 28 days</td><td>If trials count, a $62 purchase is really $90 to $125 per paying sub</td><td>One test sign-up, then split trial from paid annual</td></tr>
+      <tr><td><span class="chip c-crit">Critical</span></td><td>Two optimisation events used this year</td><td>Holiday and June test vs everything since July. Not like for like</td><td>One verified paid event everywhere</td></tr>
+      <tr><td><span class="chip c-high">High</span></td><td>Placeholder emails on 100% of server page views</td><td>Match quality stuck at 6.1</td><td>Fix at source, add browser and click IDs</td></tr>
+      <tr><td><span class="chip c-high">High</span></td><td>1-day view and engaged-view credit</td><td>A static logged 3 purchases on $31 off one to three clicks a day</td><td>Judge on 7-day click and MemberPress</td></tr>
+      <tr><td><span class="chip c-med">Medium</span></td><td>Flat $149.99 value on every purchase</td><td>ROAS is meaningless</td><td>Pass the real charge</td></tr>
+      <tr><td><span class="chip c-med">Medium</span></td><td>wordpress.com sending data since 6 Nov</td><td>Probably the /go/ deployment, unconfirmed</td><td>Confirm, then allowlist</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 5 -->
+<section class="slide">
+  <div class="head"><div class="eyebrow">Performance</div><h2>Structure fixed the cost</h2></div>
+  <div class="legend"><span><i></i>$75 target</span><span><i class="ceil"></i>$117 ceiling (3:1 on $350 LTV)</span></div>
+  <div class="bars">
+    <div class="bar"><div class="lab">BFCM 2025<small>Nov · $1,999</small></div><div class="track"><div class="fill good" style="width:51%"><span>$71</span></div><div class="ref" style="left:53.6%"></div><div class="ref ceil" style="left:83.6%"></div></div></div>
+    <div class="bar"><div class="lab">Holiday 2025<small>Dec to Jan · $3,797</small></div><div class="track"><div class="fill good" style="width:48.4%"><span>$68</span></div><div class="ref" style="left:53.6%"></div><div class="ref ceil" style="left:83.6%"></div></div></div>
+    <div class="bar"><div class="lab">Spring scaling<small>Mar to Jun · $14,207</small></div><div class="track"><div class="fill bad" style="width:94%"><span>$132</span></div><div class="ref" style="left:53.6%"></div><div class="ref ceil" style="left:83.6%"></div></div></div>
+    <div class="bar"><div class="lab">Landing page test<small>Jun to Jul · $4,153</small></div><div class="track"><div class="fill warn" style="width:74.2%"><span>$104</span></div><div class="ref" style="left:53.6%"></div><div class="ref ceil" style="left:83.6%"></div></div></div>
+    <div class="bar"><div class="lab">Scale CBO<small>Jul to Aug · $2,186</small></div><div class="track"><div class="fill warn" style="width:78.1%"><span>$109</span></div><div class="ref" style="left:53.6%"></div><div class="ref ceil" style="left:83.6%"></div></div></div>
+    <div class="bar"><div class="lab">Core protected cells<small>Jul to Oct · $4,657</small></div><div class="track"><div class="fill good" style="width:48.2%"><span>$67</span></div><div class="ref" style="left:53.6%"></div><div class="ref ceil" style="left:83.6%"></div></div></div>
+  </div>
+  <p class="cap">Cost per purchase by campaign, last 12 months. Bars on a $0 to $140 scale.</p>
+</section>
+
+<!-- 6 -->
+<section class="slide">
+  <div class="head"><div class="eyebrow">Performance</div><h2>Two ads carried the account</h2></div>
+  <table>
+    <thead><tr><th>Ad, last 90 days</th><th class="n">Spend</th><th class="n">Purchases</th><th class="n">CPP</th><th class="n">Hook rate</th><th>Call</th></tr></thead>
+    <tbody>
+      <tr class="hl"><td>Timing depart-window video</td><td class="n">$1,978</td><td class="n">34</td><td class="n">$58</td><td class="n">28%</td><td>Keep, new hook</td></tr>
+      <tr class="hl"><td>HookVid3 route payoff video</td><td class="n">$1,230</td><td class="n">22</td><td class="n">$56</td><td class="n">31%</td><td>Keep, new hook</td></tr>
+      <tr class="bad"><td>"I won't travel without RV Weather" static</td><td class="n">$468</td><td class="n">2</td><td class="n">$234</td><td class="n">static</td><td>Cut</td></tr>
+      <tr><td>"Rerouted away from bad weather" static</td><td class="n">$60</td><td class="n">3</td><td class="n">$20</td><td class="n">static</td><td>Retest on clicks</td></tr>
+      <tr><td>KatherineSaved testimonial</td><td class="n">$51</td><td class="n">0</td><td class="n">none</td><td class="n">42%</td><td>Retire</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:24px"><b class="num">78%</b> of spend and <b class="num">85%</b> of purchases came from the two videos.</p>
+</section>
+
+<!-- 7 -->
+<section class="slide">
+  <div class="head"><div class="eyebrow">October</div><h2>Clicks held. Purchases stopped.</h2></div>
+  <div class="fill-row g2">
+    <div class="card" style="gap:18px">
+      <div class="k">Cost per purchase by week</div>
+      <div class="bars">
+        <div class="bar" style="grid-template-columns:150px 1fr"><div class="lab">7 to 13 Oct<small>8 purchases</small></div><div class="track"><div class="fill good" style="width:30.2%"><span>$42</span></div><div class="ref" style="left:53.6%"></div></div></div>
+        <div class="bar" style="grid-template-columns:150px 1fr"><div class="lab">14 to 20 Oct<small>3 purchases</small></div><div class="track"><div class="fill warn" style="width:72.6%"><span>$102</span></div><div class="ref" style="left:53.6%"></div></div></div>
+        <div class="bar" style="grid-template-columns:150px 1fr"><div class="lab">21 to 27 Oct<small>2 purchases</small></div><div class="track"><div class="fill bad" style="width:88.1%"><span>$123</span></div><div class="ref" style="left:53.6%"></div></div></div>
+      </div>
+      <p class="cap">Paused after 28 October. Dashed line at $75.</p>
+    </div>
+    <div class="card"><div class="k">What went wrong</div><ul>
+      <li>Timing video: 5 purchases at $38, then 1 on $353 over the next fortnight.</li>
+      <li>Hook rate, click-through and cost per landing page view held.</li>
+      <li>End of season, ad fatigue at frequency above 3, or both. Late-October MemberPress numbers will tell us.</li>
+      <li>The $234 static took $118 of its cell while HookVid3 got $34.</li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- 8 -->
+<section class="slide">
+  <div class="head"><div class="eyebrow">Audience</div><h2>Who buys</h2></div>
+  <div class="fill-row g3" style="flex:none">
+    <table><thead><tr><th>Age</th><th class="n">CPP</th></tr></thead><tbody>
+      <tr class="hl"><td>65+</td><td class="n">$59</td></tr><tr><td>55 to 64</td><td class="n">$67</td></tr><tr class="bad"><td>45 to 54</td><td class="n">$155</td></tr></tbody></table>
+    <table><thead><tr><th>HookVid3</th><th class="n">CPP</th></tr></thead><tbody>
+      <tr class="hl"><td>Women</td><td class="n">$43</td></tr><tr class="bad"><td>Men</td><td class="n">$83</td></tr><tr><td>All ads, women vs men</td><td class="n">$57 / $72</td></tr></tbody></table>
+    <table><thead><tr><th>Placement</th><th class="n">CPP</th></tr></thead><tbody>
+      <tr class="hl"><td>Facebook Feed</td><td class="n">$56</td></tr><tr class="bad"><td>Facebook Reels</td><td class="n">$148</td></tr><tr class="bad"><td>Instagram, all</td><td class="n">$166</td></tr></tbody></table>
+  </div>
+  <div class="fill-row g3" style="flex:none">
+    <div class="card"><div class="big num" style="font-size:52px">89%</div><p style="font-size:18px">of spend and 91% of purchases from 55+</p></div>
+    <div class="card"><div class="big num" style="font-size:52px">79%</div><p style="font-size:18px">of spend and 88% of purchases on Facebook Feed</p></div>
+    <div class="card"><div class="big num" style="font-size:52px">$47</div><p style="font-size:18px">on iPad, the cheapest device</p></div>
+  </div>
+</section>
+
+<!-- 9 -->
+<section class="slide">
+  <div class="head"><div class="eyebrow">BFCM 2025</div><h2>$73 at peak, and December held up</h2></div>
+  <div class="fill-row g3" style="flex:none">
+    <div class="card"><div class="k">BFCM campaign</div><div class="big num">$71</div><p style="font-size:17px">28 purchases. Launched 25 Nov, three days before Black Friday.</p></div>
+    <div class="card"><div class="k">Holiday campaign</div><div class="big num">$68</div><p style="font-size:17px">56 purchases across December and into January.</p></div>
+    <div class="card"><div class="k">Peak CPM</div><div class="big num">$34.92</div><p style="font-size:17px">78% above December.</p></div>
+  </div>
+  <div class="fill-row g2">
+    <div class="card"><div class="k">Lessons</div><ul style="font-size:18px">
+      <li>Two statics drove 23 of 28 purchases, at $49 and $40.</li>
+      <li>Six videos spent $187 for nothing.</li>
+      <li>50 ads in one ad set, 7 got real spend. Four to six this year.</li>
+      <li>Launch earlier so it learns before the peak.</li>
+    </ul></div>
+    <div class="card"><div class="k">Last year's top four creatives</div><ul style="font-size:18px">
+      <li>Route comparison. 69 reactions.</li>
+      <li>"New RVer? Add RV Weather to your kit."</li>
+      <li>"Breaking News". Needs re-dating.</li>
+      <li>"Travel safety decisions made quicker."</li>
+    </ul><p class="cap">All statics, all product proof, no offer on the image.</p></div>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="slide">
+  <div class="head"><div class="eyebrow">Structure</div><h2>Protect winners. Test separately. Scale with new campaigns.</h2></div>
+  <table>
+    <thead><tr><th>Campaign</th><th>Set-up</th><th>Job</th></tr></thead>
+    <tbody>
+      <tr><td><b>Core</b></td><td>Timing and HookVid3, one ad per ad set. 35+ US and Canada, broad. Feed, Stories, in-stream. No Reels or Audience Network.</td><td>Steady purchases under $75</td></tr>
+      <tr><td><b>Sandbox</b></td><td>Three cells at $10 to $15 a day, one concept each. Winners move to Core.</td><td>Build the bench to 20</td></tr>
+      <tr><td><b>BFCM 2026</b></td><td>20 Nov to 2 Dec. 4 to 6 statics on last year's formats plus a warm ad set. Subscribers excluded.</td><td>Peak demand, Core untouched</td></tr>
+      <tr><td><b>Warm</b></td><td>From December. Site visitors 30 to 180 days, purchasers excluded.</td><td>Catch the 5-day to 3-week decision lag</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 11 -->
+<section class="slide">
+  <div class="head"><div class="eyebrow">Launch plan</div><h2>Restart to January</h2></div>
+  <table>
+    <thead><tr><th>Dates</th><th>Focus</th><th class="n">Per day</th></tr></thead>
+    <tbody>
+      <tr><td>9 to 11 Nov</td><td>Tracking fixes, UTMs, subscriber exclusion, new hooks</td><td class="n">$0</td></tr>
+      <tr><td>12 to 16 Nov</td><td>Core and Sandbox back on</td><td class="n">$60</td></tr>
+      <tr><td>17 to 19 Nov</td><td>Warm pre-heat starts</td><td class="n">$90</td></tr>
+      <tr><td>20 to 23 Nov</td><td>BFCM campaign live to learn</td><td class="n">$130</td></tr>
+      <tr class="peak"><td>24 Nov to 2 Dec</td><td>BFCM peak. Black Friday 27th, Cyber Monday 30th. Sandbox paused</td><td class="n">$150</td></tr>
+      <tr><td>3 Dec to 5 Jan</td><td>Holiday gift angle, Warm campaign on</td><td class="n">$115</td></tr>
+      <tr><td>January</td><td>Trip planning season. Review at month end</td><td class="n">$115</td></tr>
+    </tbody>
+  </table>
+  <p class="cap">About $2,100 in November and $3,500 a month after. At $60 to $75 per purchase: 28 to 35 in November, 47 to 58 a month after. Planning ranges, not forecasts.</p>
+</section>
+
+<!-- 12 -->
+<section class="slide">
+  <div class="head"><div class="eyebrow">Creative</div><h2>Six angles to rebuild the bench</h2></div>
+  <div class="fill-row g3">
+    <div class="card"><h3>New hooks, same bodies</h3><p style="font-size:18px">Fresh first three seconds on Timing and HookVid3.</p></div>
+    <div class="card"><h3>Snowbirds heading south</h3><p style="font-size:18px">November travel days. Texas, Florida and Arizona lead spend.</p></div>
+    <div class="card"><h3>Last year's BFCM winners</h3><p style="font-size:18px">Same formats, offer on the image, original posts reused for proof.</p></div>
+    <div class="card"><h3>For the trip planner</h3><p style="font-size:18px">HookVid3 sells at $43 to women. Write for whoever plans the route.</p></div>
+    <div class="card"><h3>"This isn't a weather map"</h3><p style="font-size:18px">Kathy's line on the risk-level visual.</p></div>
+    <div class="card"><h3>Real RVers</h3><p style="font-size:18px">Eggers v2 from 7:01, plus the New RVer snow format.</p></div>
+  </div>
+</section>
+
+<!-- 13 -->
+<section class="slide">
+  <div class="head"><div class="eyebrow">Rules</div><h2>How we call it</h2></div>
+  <div class="fill-row g2">
+    <div class="card"><div class="k">New ads</div><ul>
+      <li>Video hook rate 25%+ by 48 hours</li>
+      <li>Click-through 1.2%+ by 72 hours</li>
+      <li>Cost per landing page view $2.50 or less</li>
+      <li>Off at $150 with no purchase</li>
+      <li>Into Core at 3+ purchases under $75</li>
+    </ul></div>
+    <div class="card"><div class="k">Budgets</div><ul>
+      <li>Up 20% max every 72 hours while under $75</li>
+      <li>Hold between $75 and $100</li>
+      <li>Down 20% if over $100 for a week</li>
+      <li>No edits to winners during BFCM</li>
+      <li>$75 happy, $100 acceptable, $117 ceiling</li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- 14 -->
+<section class="slide">
+  <div class="head"><div class="eyebrow">From you</div><h2>Five things to launch</h2></div>
+  <ol class="prio" style="gap:16px">
+    <li><div><b style="font-size:24px">BFCM offer, dates and coupon link</b><span>By Thursday 12 November.</span></div></li>
+    <li><div><b style="font-size:24px">OK for one $0.99 test sign-up</b><span>To confirm the purchase events.</span></div></li>
+    <li><div><b style="font-size:24px">Who set up the server-side tracking</b><span>Plugin or partner.</span></div></li>
+    <li><div><b style="font-size:24px">Subscriber email export from MemberPress</b><span>For exclusions and lookalikes.</span></div></li>
+    <li><div><b style="font-size:24px">Trial and paid numbers for 15 to 31 October</b><span>To separate season from fatigue.</span></div></li>
+  </ol>
+</section>
+
+</div></div>
+
+<div class="nav" aria-label="Slide controls">
+  <button id="prev" type="button" aria-label="Previous slide">←</button>
+  <span id="count">1 / 14</span>
+  <button id="next" type="button" aria-label="Next slide">→</button>
+</div>
+
+<script>
+(function(){
+  var slides=[].slice.call(document.querySelectorAll('.slide'));
+  var deck=document.getElementById('deck'), count=document.getElementById('count');
+  slides.forEach(function(s,i){s.setAttribute('data-n',(i+1)+' / '+slides.length);});
+  var i=0;
+  var h=parseInt((location.hash||'').replace('#',''),10); if(h>0&&h<=slides.length) i=h-1;
+  function show(n){
+    i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach(function(s,j){s.classList.toggle('active',j===i);});
+    count.textContent=(i+1)+' / '+slides.length;
+    try{history.replaceState(null,'','#'+(i+1));}catch(e){}
+  }
+  function fit(){
+    var s=Math.min(window.innerWidth/1280,(window.innerHeight-50)/720);
+    deck.style.transform='scale('+s+')';
+  }
+  document.getElementById('prev').onclick=function(){show(i-1);};
+  document.getElementById('next').onclick=function(){show(i+1);};
+  document.addEventListener('keydown',function(e){
+    if(['ArrowRight','PageDown',' ','Enter'].indexOf(e.key)>-1){e.preventDefault();show(i+1);}
+    if(['ArrowLeft','PageUp','Backspace'].indexOf(e.key)>-1){e.preventDefault();show(i-1);}
+    if(e.key==='Home')show(0); if(e.key==='End')show(slides.length-1);
+  });
+  var x0=null;
+  document.addEventListener('touchstart',function(e){x0=e.touches[0].clientX;},{passive:true});
+  document.addEventListener('touchend',function(e){if(x0===null)return;var dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>40)show(i+(dx<0?1:-1));x0=null;});
+  window.addEventListener('resize',fit);
+  fit(); show(i);
+})();
+</script>
+</body>
+</html>
